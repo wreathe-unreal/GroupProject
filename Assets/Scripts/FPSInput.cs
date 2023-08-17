@@ -7,6 +7,7 @@ using UnityEngine;
 public class FPSInput : MonoBehaviour
 {
     public bool bIsJumping = false;
+    private bool isWalking = false;
 
     public float JumpTime { get; set; }
 
@@ -19,11 +20,15 @@ public class FPSInput : MonoBehaviour
     // reference to the character controller
     private CharacterController charController;
 
+    //footstep
+    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
         // get the character controller component
         charController = GetComponent<CharacterController>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -32,6 +37,9 @@ public class FPSInput : MonoBehaviour
         float deltaY = gravity;
         float deltaX = Input.GetAxis("Horizontal") * speed;
         float deltaZ = Input.GetAxis("Vertical") * speed;
+
+        //footstep
+
         // changes based on WASD keys
         
         if (Input.GetButtonDown("Jump") && charController.isGrounded)
@@ -72,5 +80,21 @@ public class FPSInput : MonoBehaviour
 
         // pass the movement to the character controller
         charController.Move(movement);
+
+        HandleFootsteps(deltaX, deltaZ);
+    }
+
+    void HandleFootsteps(float deltaX, float deltaZ)
+    {
+        if (charController.isGrounded && (deltaX != 0 || deltaZ != 0) && !isWalking)
+        {
+            audioSource.Play();
+            isWalking = true;
+        }
+        else if ((!charController.isGrounded || (deltaX == 0 && deltaZ == 0)) && isWalking)
+        {
+            audioSource.Stop();
+            isWalking = false;
+        }
     }
 }
