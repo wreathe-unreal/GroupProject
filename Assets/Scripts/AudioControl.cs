@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BGMController : MonoBehaviour
 {
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     private void Start()
     {
