@@ -7,7 +7,6 @@ using UnityEngine;
 [AddComponentMenu("Control Script/FPS Input")]  // add to the Unity editor's component menu
 public class PlayerController : MonoBehaviour
 {
-    public bool bAcquiredFlashlight = false;
     public bool bIsJumping = false;
     private bool bIsWalking = false;
 
@@ -18,10 +17,10 @@ public class PlayerController : MonoBehaviour
 
     // gravity setting
     public float gravity = -9.8f;
-    public GameObject Player;
 
     // reference to the character controller
-    private CharacterController charController;
+    private PlayerCharacter Player;
+    private CharacterController CharController;
 
     //footstep
     public AudioSource audioSource;
@@ -29,9 +28,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // get the character controller component
-        charController = GetComponent<CharacterController>();
         audioSource = GetComponent<AudioSource>();
+        Player = GetComponent<PlayerCharacter>();
+        CharController = GetComponent<CharacterController>();
     }
 
     void Interact(GameObject go) 
@@ -45,12 +44,6 @@ public class PlayerController : MonoBehaviour
 
     
     void GameOver() //displays what it needs to and sends player to main menu
-    {
-        
-    }
-
-    void FlashlightToggle() //responds to f key in Update() and turns on the flashlight light on the player object
-
     {
         
     }
@@ -72,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
         // changes based on WASD keys
         
-        if (Input.GetButtonDown("Jump") && charController.isGrounded)
+        if (Input.GetButtonDown("Jump") && CharController.isGrounded)
         {
             JumpTime = .55f;
         }
@@ -85,16 +78,8 @@ public class PlayerController : MonoBehaviour
         
         if(Input.GetButtonDown("Flashlight"))
         {
-            GameObject Flashlight = transform.Find("Main Camera/Flashlight").gameObject;
 
-            if (Flashlight.activeInHierarchy)
-            {
-                Flashlight.SetActive(false);
-            }
-            else
-            {
-                Flashlight.SetActive(true);
-            }
+            Player.ToggleFlashlight();
         }
         
         Vector3 movement = new Vector3(deltaX, deltaY, deltaZ);
@@ -109,19 +94,19 @@ public class PlayerController : MonoBehaviour
         movement = transform.TransformDirection(movement);
 
         // pass the movement to the character controller
-        charController.Move(movement);
+        CharController.Move(movement);
 
         HandleFootsteps(deltaX, deltaZ);
     }
 
     void HandleFootsteps(float deltaX, float deltaZ)
     {
-        if (charController.isGrounded && (deltaX != 0 || deltaZ != 0) && !bIsWalking)
+        if (CharController.isGrounded && (deltaX != 0 || deltaZ != 0) && !bIsWalking)
         {
             audioSource.Play();
             bIsWalking = true;
         }
-        else if ((!charController.isGrounded || (deltaX == 0 && deltaZ == 0)) && bIsWalking)
+        else if ((!CharController.isGrounded || (deltaX == 0 && deltaZ == 0)) && bIsWalking)
         {
             audioSource.Stop();
             bIsWalking = false;

@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(gameStartScene);
     }
+    
 
     public void QuitGame()
     {

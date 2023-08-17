@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum EDoorName
 {
-    RedDoor, //or whatever you want to name it
-    BlueDoor,
-    GreenDoor
+    RedDoor = 0, //or whatever you want to name it
+    BlueDoor = 1,
+    GreenDoor = 2
 }
 
 public class DoorController : MonoBehaviour
