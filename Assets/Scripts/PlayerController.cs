@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     public bool bAcquiredFlashlight = false;
     public bool bIsJumping = false;
-    private bool isWalking = false;
+    private bool bIsWalking = false;
 
     public float JumpTime { get; set; }
 
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController charController;
 
     //footstep
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -116,15 +116,15 @@ public class PlayerController : MonoBehaviour
 
     void HandleFootsteps(float deltaX, float deltaZ)
     {
-        if (charController.isGrounded && (deltaX != 0 || deltaZ != 0) && !isWalking)
+        if (charController.isGrounded && (deltaX != 0 || deltaZ != 0) && !bIsWalking)
         {
             audioSource.Play();
-            isWalking = true;
+            bIsWalking = true;
         }
-        else if ((!charController.isGrounded || (deltaX == 0 && deltaZ == 0)) && isWalking)
+        else if ((!charController.isGrounded || (deltaX == 0 && deltaZ == 0)) && bIsWalking)
         {
             audioSource.Stop();
-            isWalking = false;
+            bIsWalking = false;
         }
     }
 }

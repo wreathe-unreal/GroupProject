@@ -10,6 +10,6 @@ public class StartGame : MonoBehaviour
     // Update is called once per frame
     public void startGame()
     {
-        SceneManager.LoadScene(gameStartScene);
+        SceneManager.LoadScene("Horror Map");
     }
 }
