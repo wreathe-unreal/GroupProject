@@ -15,7 +15,7 @@ public class BatteryValue : MonoBehaviour
 
     void Start()
     {
-        flash = GameObject.Find("Player/Camera/Flashlight Model/Flashlight");
+        flash = GameObject.Find("Player/Camera/FlashlightModel/Flashlight");
         battery = flashlight.fillAmount;
         SetNumberText(battery * 100);
     }

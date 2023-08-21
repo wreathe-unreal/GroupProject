@@ -46,18 +46,20 @@ public class PlayerCharacter : MonoBehaviour
             //set booleans
             if (bFlashlightActive)
             {
-                FindAndToggleFlashlight("Camera/Flashlight");
-                FindAndToggleFlashlight("Camera/Flashlight2");
-                FindAndToggleFlashlight("Camera/ShortFlashlight");
+                FindAndDisableLightByString("Camera/FlashlightModel/Flashlight");
+                FindAndDisableLightByString("Camera/FlashlightModel/Flashlight2");
+                FindAndDisableLightByString("Camera/FlashlightModel/Flashlight3");
+                FindAndDisableLightByString("Camera/FlashlightModel/ShortFlashlight");
                 bFlashlightActive = false;
             }
             else
             {
                 if (FlashlightBattery > 0)
                 {
-                    FindAndToggleFlashlight("Camera/Flashlight");
-                    FindAndToggleFlashlight("Camera/Flashlight2");
-                    FindAndToggleFlashlight("Camera/ShortFlashlight");
+                    FindAndDisableLightByString("Camera/FlashlightModel/Flashlight");
+                    FindAndDisableLightByString("Camera/FlashlightModel/Flashlight2");
+                    FindAndDisableLightByString("Camera/FlashlightModel/Flashlight3");
+                    FindAndDisableLightByString("Camera/FlashlightModel/ShortFlashlight");
                     
                     bFlashlightActive = true;
                 }
@@ -65,7 +67,7 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
-    void FindAndToggleFlashlight(string path)
+    void FindAndDisableLightByString(string path)
     {
         Transform flashlightTransform = transform.Find(path);
         if (flashlightTransform != null)
