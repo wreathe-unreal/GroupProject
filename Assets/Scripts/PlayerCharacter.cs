@@ -13,11 +13,14 @@ public class PlayerCharacter : MonoBehaviour
     private GameObject OverlapKey;
     public double FlashlightBattery = 100.0;
     private PlayerController Controller;
+    public AudioSource FlashlightAudioSource;
 
+    private GameObject Key;
     // Start is called before the first frame update
     void Start()
     {
         Controller = GetComponent<PlayerController>();
+        AudioSource flashlightAudioSource = GetComponents<AudioSource>()[1];
     }
 
     // Update is called once per frame
@@ -37,34 +40,6 @@ public class PlayerCharacter : MonoBehaviour
             {
                 ToggleFlashlight();
             }
-    }
-    
-    public void ToggleFlashlight() //responds to f key in Update() and turns on the flashlight light on the player object
-    {
-        if (bFlashlightAcquired) ;
-        {
-            //set booleans
-            if (bFlashlightActive)
-            {
-                FindAndDisableLightByString("Camera/FlashlightModel/Flashlight");
-                FindAndDisableLightByString("Camera/FlashlightModel/Flashlight2");
-                FindAndDisableLightByString("Camera/FlashlightModel/Flashlight3");
-                FindAndDisableLightByString("Camera/FlashlightModel/ShortFlashlight");
-                bFlashlightActive = false;
-            }
-            else
-            {
-                if (FlashlightBattery > 0)
-                {
-                    FindAndDisableLightByString("Camera/FlashlightModel/Flashlight");
-                    FindAndDisableLightByString("Camera/FlashlightModel/Flashlight2");
-                    FindAndDisableLightByString("Camera/FlashlightModel/Flashlight3");
-                    FindAndDisableLightByString("Camera/FlashlightModel/ShortFlashlight");
-                    
-                    bFlashlightActive = true;
-                }
-            }
-        }
     }
 
     void FindAndDisableLightByString(string path)
@@ -88,4 +63,95 @@ public class PlayerCharacter : MonoBehaviour
             Debug.LogError("Flashlight not found at path: " + path);
         }
     }
+
+    private void OnTriggerStay(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Key"))
+        {
+            HandleKeyCollision(collision);
+        }
+    }
+
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Key"))
+        {
+            HandleKeyCollision(other, true);
+        }
+
+    }
+        
+    private void HandleKeyCollision(Collider collision, bool bTriggerExit = false)
+    {
+        Key = collision.gameObject;
+        if (bTriggerExit)
+        {
+            Key keyScript = Key.GetComponent<Key>();
+            if (keyScript != null)
+            {
+                keyScript.HideText();
+            }
+
+            return;
+        }
+        // Project the key's world position to screen space
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(Key.transform.position);
+
+        // Determine the center of the screen
+        Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+                    
+        float allowedScreenDeviation = 300.0f;
+        // Check if the key is within the allowed deviation from the center of the screen
+        if (Vector3.Distance(screenPosition, screenCenter) <= allowedScreenDeviation)
+        {
+            Debug.Log("Key is within distance and center of the screen.");
+            Key keyScript = Key.GetComponent<Key>();
+            if (keyScript != null)
+            {
+                keyScript.ShowText();
+            }
+            else
+            {
+                Debug.LogError("Key script not found on the Key GameObject");
+            }
+        }
+        else
+        {
+            Debug.Log("Key is " + (screenPosition-screenCenter).ToString() + " away.");
+        }
+
+    }
+        
+    public void ToggleFlashlight() //responds to f key in Update() and turns on the flashlight light on the player object
+    {
+        if (bFlashlightAcquired) ;
+        {
+            //set booleans
+            if (bFlashlightActive)
+            {
+                FlashlightAudioSource.Play();
+                FindAndDisableLightByString("Camera/FlashlightModel/Flashlight");
+                FindAndDisableLightByString("Camera/FlashlightModel/Flashlight2");
+                FindAndDisableLightByString("Camera/FlashlightModel/Flashlight3");
+                FindAndDisableLightByString("Camera/FlashlightModel/ShortFlashlight");
+                bFlashlightActive = false;
+            }
+            else
+            {
+                if (FlashlightBattery > 0)
+                {
+                    FlashlightAudioSource.Play();
+                    FindAndDisableLightByString("Camera/FlashlightModel/Flashlight");
+                    FindAndDisableLightByString("Camera/FlashlightModel/Flashlight2");
+                    FindAndDisableLightByString("Camera/FlashlightModel/Flashlight3");
+                    FindAndDisableLightByString("Camera/FlashlightModel/ShortFlashlight");
+                    
+                    bFlashlightActive = true;
+                }
+            }
+        }
+    }
 }
+
+

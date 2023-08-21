@@ -62,20 +62,6 @@ public class PlayerController : MonoBehaviour
         float deltaZ = Input.GetAxis("Vertical") * speed;
 
         //footstep
-
-        // changes based on WASD keys
-        
-        if (Input.GetButtonDown("Jump") && CharController.isGrounded)
-        {
-            JumpTime = .55f;
-        }
-
-        if (JumpTime > 0)
-        {
-            deltaY += 15f;
-            JumpTime = JumpTime - Time.deltaTime;
-        }
-        
         if(Input.GetButtonDown("Flashlight"))
         {
 

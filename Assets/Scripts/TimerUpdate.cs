@@ -20,7 +20,6 @@ public class TimerUpdate : MonoBehaviour
     {
         timer += 1.0f * Time.deltaTime;
         int inttime = (int)timer;
-        Debug.Log(timer);
         string minutes = ((int)(timer/60)).ToString("F0");
         float seconds = (timer % 60);
         string secondss = seconds.ToString("F0");

@@ -33,7 +33,7 @@ public class BatteryValue : MonoBehaviour
     public void updateHUD()
     {
         if (flash.activeInHierarchy == true && battery <= 0f) flash.SetActive(false);
-        else if (flash.activeInHierarchy == true && battery > 0f) battery -= 0.03f * Time.deltaTime;
+        else if (flash.activeInHierarchy == true && battery > 0f) battery -= 0.005f * Time.deltaTime;
         if (battery < 0f) battery = 0f;
         gameObject.GetComponent<Image>().fillAmount = battery;
         SetNumberText(battery * 100);
