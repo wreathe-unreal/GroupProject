@@ -8,6 +8,7 @@ public class TimerUpdate : MonoBehaviour
 {
     public TextMeshProUGUI text;
     public float timer = 0f;
+    public int mintime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -19,11 +20,15 @@ public class TimerUpdate : MonoBehaviour
     void Update()
     {
         timer += 1.0f * Time.deltaTime;
-        int inttime = (int)timer;
-        string minutes = ((int)(timer/60)).ToString("F0");
-        float seconds = (timer % 60);
-        string secondss = seconds.ToString("F0");
-        if (seconds != 0 ) text.text = minutes + ":" + secondss;
-        else text.text = minutes + ":0" + secondss;
+        if (timer >= 60f)
+        {
+            mintime += 1;
+            timer -= 60f;
+        }
+        string minutes = mintime.ToString("F0");
+        int sectime = (int)timer;
+        string seconds = sectime.ToString("F0");
+        if (sectime < 10) text.text = minutes + ":0" + seconds;
+        else text.text = minutes + ":" + seconds;
     }
 }

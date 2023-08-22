@@ -125,7 +125,7 @@ public class PlayerCharacter : MonoBehaviour
         
     public void ToggleFlashlight() //responds to f key in Update() and turns on the flashlight light on the player object
     {
-        if (bFlashlightAcquired) ;
+        if (bFlashlightAcquired) 
         {
             //set booleans
             if (bFlashlightActive)
