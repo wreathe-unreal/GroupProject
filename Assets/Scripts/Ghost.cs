@@ -19,7 +19,7 @@ public class Ghost : MonoBehaviour
 
     //FieldOfView FOV;
     bool bSpotted = false;
-
+    private Camera playerCamera;
     private bool inPursuit = false;
     private float pursuitTime = 0;
     [SerializeField]
@@ -42,16 +42,25 @@ public class Ghost : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         ghostMesh = gameObject.GetComponentInChildren<MeshRenderer>();
-        ghostMaterial = ghostMesh.material;
+        ghostMaterial = ghostMesh.material; 
         ghostMaterialColor = ghostMaterial.color;
-        ghostMaterialColor.a = .7f;
+        ghostMaterialColor.a = .6f;
         player = GameObject.FindGameObjectWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
         ghostAnimate = GetComponent<Animator>();
         ghostGlow = GetComponent<Light>();
         ghostFOV = transform.GetChild(1).GetComponent<GhostFOV>();
+        ghostMaterialColor = ghostMaterial.color;
+        ghostMaterial.SetFloat("_Mode", 3); // Set to Transparent mode
+        ghostMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        ghostMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        ghostMaterial.SetInt("_ZWrite", 0);
+        ghostMaterial.DisableKeyword("_ALPHATEST_ON");
+        ghostMaterial.EnableKeyword("_ALPHABLEND_ON");
+        ghostMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        ghostMaterial.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
     }
 
     // Update is called once per frame
@@ -174,32 +183,20 @@ public class Ghost : MonoBehaviour
 
     void ReactToLight()
     {
-        MeshRenderer ghostMesh = gameObject.GetComponentInChildren<MeshRenderer>();
-        Material ghostMaterial = ghostMesh.material;
+        Vector3 screenPosition = playerCamera.WorldToScreenPoint(transform.position);
+        Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+        // Define allowed screen deviation from the center
+        float allowedScreenDeviation = 500.0f;
 
-        // Make sure the shader used by the material supports transparency
+// Compute distance from the screen center to the ghost's projected position
+        float distanceFromCenter = Vector3.Distance(screenPosition, screenCenter);
         
-        ghostMaterialColor = ghostMaterial.color;
-        ghostMaterial.SetFloat("_Mode", 3); // Set to Transparent mode
-        ghostMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        ghostMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        ghostMaterial.SetInt("_ZWrite", 0);
-        ghostMaterial.DisableKeyword("_ALPHATEST_ON");
-        ghostMaterial.EnableKeyword("_ALPHABLEND_ON");
-        ghostMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        ghostMaterial.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
-        // Sphere projection towards the player's position
-        Vector3 directionToGhost = (transform.position - player.transform.position).normalized;
-
-        // Dot product to check if the player is facing the ghost
-        float dot = Vector3.Dot(player.transform.forward, directionToGhost);
-
-        // If dot product is positive, player's forward is in the same general direction as directionToGhost
-        if (dot > 0)
+        if (distanceFromCenter <= allowedScreenDeviation)
         {
             // Raycast to check for obstruction
             float distanceToGhost = Vector3.Distance(transform.position, player.transform.position);
             
+            Vector3 directionToGhost = (transform.position - player.transform.position).normalized;
             if (!Physics.Raycast(player.transform.position, directionToGhost, distanceToGhost, obstructionMask))
             {
                 if (player.GetComponent<PlayerCharacter>().bFlashlightActive)
@@ -218,7 +215,7 @@ public class Ghost : MonoBehaviour
             {
                 // Obstruction detected
                 Debug.Log("Player is facing the ghost, but there is an obstruction.");
-                ghostMaterialColor.a = Mathf.Lerp(ghostMaterialColor.a, 1, Time.deltaTime * 1.0f);
+                ghostMaterialColor.a = Mathf.Lerp(ghostMaterialColor.a, 6f, Time.deltaTime * 1.0f);
                 ghostMaterial.color = ghostMaterialColor;
             }
         }
@@ -226,7 +223,7 @@ public class Ghost : MonoBehaviour
         {
             // Player is not facing the ghost
             Debug.Log("Player is not facing the ghost.");
-            ghostMaterialColor.a = Mathf.Lerp(ghostMaterialColor.a, 1, Time.deltaTime * 1.0f);
+            ghostMaterialColor.a = Mathf.Lerp(ghostMaterialColor.a, .6f, Time.deltaTime * 1.0f);
             ghostMaterial.color = ghostMaterialColor;
         }
        
