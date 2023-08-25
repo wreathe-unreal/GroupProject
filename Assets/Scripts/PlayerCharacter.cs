@@ -65,49 +65,40 @@ public class PlayerCharacter : MonoBehaviour
 
     private void OnTriggerStay(Collider collision)
     {
-        if (collision.gameObject.CompareTag("Key"))
-        {
-            HandleKeyCollision(collision);
-        }
-
-        if (collision.gameObject.CompareTag("Door"))
-        {
-            HandleDoorCollision(collision);
-        }
+        HandleInteractableCollision(collision);
     }
 
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Key"))
-        {
-            HandleKeyCollision(other, true);
-        }
-        if (other.gameObject.CompareTag("Door"))
-        {
-            HandleDoorCollision(other, true);
-        }
+        HandleInteractableCollision(other, true);
+
 
     }
-        
-    private void HandleKeyCollision(Collider collision, bool bTriggerExit = false)
+
+    private void HandleInteractableCollision(Collider collision, bool bTriggerExit = false)
     {
         InteractObject = collision.gameObject.GetComponent<InteractableObject>();
         if (InteractObject == null)
         {
             return;
         }
-        
         if (bTriggerExit)
         {
-            Key keyScript = InteractObject.GetComponent<Key>();
+            Key keyScript = InteractObject as Key;
             if (keyScript != null)
             {
                 keyScript.HideText();
+                return;
             }
-
-            return;
-        }
+            DoorController doorScript = InteractObject as DoorController;
+            if (doorScript != null)
+            {
+                doorScript.HideText();
+                return;
+            }
+        } 
+        
         // Project the key's world position to screen space
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(InteractObject.transform.position);
 
@@ -118,22 +109,20 @@ public class PlayerCharacter : MonoBehaviour
         // Check if the key is within the allowed deviation from the center of the screen
         if (Vector3.Distance(screenPosition, screenCenter) <= allowedScreenDeviation)
         {
-            Debug.Log("Key is within distance and center of the screen.");
+            DoorController doorScript = InteractObject.GetComponent<DoorController>();
+            if (doorScript != null && Keys.Contains(doorScript.DoorName))
+            {
+                doorScript.ShowText();
+            }
+        }
+        if (Vector3.Distance(screenPosition, screenCenter) <= allowedScreenDeviation)
+        {
             Key keyScript = InteractObject.GetComponent<Key>();
             if (keyScript != null)
             {
                 keyScript.ShowText();
             }
-            else
-            {
-                Debug.LogError("Key script not found on the Key GameObject");
-            }
         }
-        else
-        {
-            Debug.Log("Key is " + (screenPosition-screenCenter).ToString() + " away.");
-        }
-
     }
         
     public void ToggleFlashlight() //responds to f key in Update() and turns on the flashlight light on the player object
@@ -164,44 +153,6 @@ public class PlayerCharacter : MonoBehaviour
                 }
             }
         }
-    }
-    
-    private void HandleDoorCollision(Collider collision, bool bTriggerExit = false)
-    {
-        InteractObject = collision.gameObject.GetComponent<InteractableObject>();
-
-        if (InteractObject == null)
-        {
-            return;
-        }
-        DoorController doorScript = InteractObject as DoorController;
-
-        if (bTriggerExit)
-        {
-            if (doorScript != null)
-            {
-                doorScript.HideText();
-            }
-
-            return;
-        }
-        // Project the key's world position to screen space
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(InteractObject.transform.position);
-
-        // Determine the center of the screen
-        Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
-                    
-        float allowedScreenDeviation = 300.0f;
-        // Check if the key is within the allowed deviation from the center of the screen
-        if (Vector3.Distance(screenPosition, screenCenter) <= allowedScreenDeviation)
-        {
-            Debug.Log("Door is within distance and center of the screen.");
-            if (doorScript != null && Keys.Contains(doorScript.DoorName))
-            {
-                doorScript.ShowText();
-            }
-        }
-
     }
 }
 
