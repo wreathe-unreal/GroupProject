@@ -36,8 +36,10 @@ public class PlayerController : MonoBehaviour
     void Interact(InteractableObject io)
     {
         //pass the interaction to the interactable object
-        io.Interact(Player);
-
+        if (io != null)
+        {
+            io.Interact(Player); 
+        }
     }
 
     

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
@@ -18,6 +19,10 @@ public class PlayerCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        var surface = GameObject.FindObjectOfType<NavMeshSurface>();
+     
+        surface.UpdateNavMesh (surface.navMeshData);
+
         Controller = GetComponent<PlayerController>();
         AudioSource flashlightAudioSource = GetComponents<AudioSource>()[1];
     }
