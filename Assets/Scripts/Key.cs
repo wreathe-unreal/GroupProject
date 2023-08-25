@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Key : MonoBehaviour
+public class Key : InteractableObject
 {
     public GameObject textObject; // Reference to the text object
     public float displayDuration; // Duration to display the text
+    public EDoorName AssociatedDoor;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +29,13 @@ public class Key : MonoBehaviour
     public void HideText()
     {
         textObject.SetActive(false);
+    }
+    
+    public override void Interact(PlayerCharacter player)
+    {
+        player.Keys.Add(AssociatedDoor);
+        HideText();
+        gameObject.SetActive(false);
     }
 
 

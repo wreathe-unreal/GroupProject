@@ -33,14 +33,11 @@ public class PlayerController : MonoBehaviour
         CharController = GetComponent<CharacterController>();
     }
 
-    void Interact(GameObject go) 
+    void Interact(InteractableObject io)
     {
-        
+        io.Interact(Player);
+
     }
-    //attempts to interact (add Key to player inventory 
-    //if the GameObject has a key tag or call OpenDoor() if the object has 
-    //a Door tag by first getting the EDoorName and looping the player inventory to find a 
-    //match by EDoorName 
 
     
     void GameOver() //displays what it needs to and sends player to main menu
@@ -66,6 +63,12 @@ public class PlayerController : MonoBehaviour
         {
 
             Player.ToggleFlashlight();
+        }
+        //footstep
+        if(Input.GetButtonDown("Interact"))
+        {
+
+            Interact(Player.InteractObject);
         }
         
         Vector3 movement = new Vector3(deltaX, deltaY, deltaZ);
@@ -98,4 +101,5 @@ public class PlayerController : MonoBehaviour
             bIsWalking = false;
         }
     }
+    
 }

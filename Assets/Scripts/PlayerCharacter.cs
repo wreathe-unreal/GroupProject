@@ -8,14 +8,13 @@ public class PlayerCharacter : MonoBehaviour
     public double FlashlightDrainSpeed = -1.0;
     public bool bFlashlightAcquired = true;
     public bool bFlashlightActive = true;
-    public List<GameObject> Inventory;
+    public List<EDoorName> Keys;
     private GameObject OverlapDoor;
     private GameObject OverlapKey;
     public double FlashlightBattery = 100.0;
     private PlayerController Controller;
     public AudioSource FlashlightAudioSource;
-
-    private GameObject Key;
+    public InteractableObject InteractObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -70,6 +69,11 @@ public class PlayerCharacter : MonoBehaviour
         {
             HandleKeyCollision(collision);
         }
+
+        if (collision.gameObject.CompareTag("Door"))
+        {
+            HandleDoorCollision(collision);
+        }
     }
 
 
@@ -79,15 +83,24 @@ public class PlayerCharacter : MonoBehaviour
         {
             HandleKeyCollision(other, true);
         }
+        if (other.gameObject.CompareTag("Door"))
+        {
+            HandleDoorCollision(other, true);
+        }
 
     }
         
     private void HandleKeyCollision(Collider collision, bool bTriggerExit = false)
     {
-        Key = collision.gameObject;
+        InteractObject = collision.gameObject.GetComponent<InteractableObject>();
+        if (InteractObject == null)
+        {
+            return;
+        }
+        
         if (bTriggerExit)
         {
-            Key keyScript = Key.GetComponent<Key>();
+            Key keyScript = InteractObject.GetComponent<Key>();
             if (keyScript != null)
             {
                 keyScript.HideText();
@@ -96,7 +109,7 @@ public class PlayerCharacter : MonoBehaviour
             return;
         }
         // Project the key's world position to screen space
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(Key.transform.position);
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(InteractObject.transform.position);
 
         // Determine the center of the screen
         Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
@@ -106,7 +119,7 @@ public class PlayerCharacter : MonoBehaviour
         if (Vector3.Distance(screenPosition, screenCenter) <= allowedScreenDeviation)
         {
             Debug.Log("Key is within distance and center of the screen.");
-            Key keyScript = Key.GetComponent<Key>();
+            Key keyScript = InteractObject.GetComponent<Key>();
             if (keyScript != null)
             {
                 keyScript.ShowText();
@@ -151,6 +164,44 @@ public class PlayerCharacter : MonoBehaviour
                 }
             }
         }
+    }
+    
+    private void HandleDoorCollision(Collider collision, bool bTriggerExit = false)
+    {
+        InteractObject = collision.gameObject.GetComponent<InteractableObject>();
+
+        if (InteractObject == null)
+        {
+            return;
+        }
+        DoorController doorScript = InteractObject as DoorController;
+
+        if (bTriggerExit)
+        {
+            if (doorScript != null)
+            {
+                doorScript.HideText();
+            }
+
+            return;
+        }
+        // Project the key's world position to screen space
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(InteractObject.transform.position);
+
+        // Determine the center of the screen
+        Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+                    
+        float allowedScreenDeviation = 300.0f;
+        // Check if the key is within the allowed deviation from the center of the screen
+        if (Vector3.Distance(screenPosition, screenCenter) <= allowedScreenDeviation)
+        {
+            Debug.Log("Door is within distance and center of the screen.");
+            if (doorScript != null && Keys.Contains(doorScript.DoorName))
+            {
+                doorScript.ShowText();
+            }
+        }
+
     }
 }
 
