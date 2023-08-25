@@ -72,8 +72,7 @@ public class PlayerCharacter : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         HandleInteractableCollision(other, true);
-
-
+        InteractObject = null;
     }
 
     private void HandleInteractableCollision(Collider collision, bool bTriggerExit = false)

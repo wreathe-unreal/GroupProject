@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
     void Interact(InteractableObject io)
     {
+        //pass the interaction to the interactable object
         io.Interact(Player);
 
     }

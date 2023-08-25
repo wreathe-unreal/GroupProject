@@ -12,23 +12,29 @@ public enum EDoorName
 public class DoorController : InteractableObject
 {
     public EDoorName DoorName;
-    private bool bDoorIsClosed = true;
     // Start is called before the first frame update
     public GameObject textObjectFront; // Reference to the text object
     public GameObject textObjectBack; // Reference to the text object
     public float displayDuration; // Duration to display the text
-
     public Animator AnimationController;
-    // Start is called before the first frame update
+    public AudioSource LockedDoorAudio;
+    public AudioSource OpenDoorAudio;
+
+    private bool bDoorIsClosed = true;
+    
+    
     void Start()
     {
         textObjectFront.SetActive(false);
         textObjectBack.SetActive(false);
         displayDuration = .1f; // Duration to display the text
+        AudioSource LockedDoorAudio = GetComponents<AudioSource>()[0];
+        AudioSource OpenDoorAudio = GetComponents<AudioSource>()[1];
+
 
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
         
@@ -55,13 +61,22 @@ public class DoorController : InteractableObject
     
     public override void Interact(PlayerCharacter player)
     {
-        if (player.Keys.Contains(DoorName))
+        if (bDoorIsClosed)
         {
-            OpenDoor();
-            HideText();
-            textObjectFront.transform.parent.gameObject.SetActive(false);
-            textObjectBack.transform.parent.gameObject.SetActive(false);
+            if (player.Keys.Contains(DoorName))
+            {
+                OpenDoorAudio.Play();
+                OpenDoor();
+                HideText();
+                bDoorIsClosed = false;
+                textObjectFront.transform.parent.gameObject.SetActive(false);
+                textObjectBack.transform.parent.gameObject.SetActive(false);
             
+            }
+            else
+            {
+                LockedDoorAudio.Play();    
+            }    
         }
     }
 }
