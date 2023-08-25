@@ -215,7 +215,7 @@ MonoBehaviour:
   pursuitDur: 10
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65
 --- !u!136 &9165403208127933506
 CapsuleCollider:
   m_ObjectHideFlags: 0

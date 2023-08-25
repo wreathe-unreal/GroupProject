@@ -35,7 +35,6 @@ public class Ghost : MonoBehaviour
     private Light ghostGlow;
     private GhostFOV ghostFOV;
     public LayerMask obstructionMask;
-
     private MeshRenderer ghostMesh;
     private Color ghostMaterialColor;
     private Material ghostMaterial;
@@ -186,7 +185,7 @@ public class Ghost : MonoBehaviour
         Vector3 screenPosition = playerCamera.WorldToScreenPoint(transform.position);
         Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
         // Define allowed screen deviation from the center
-        float allowedScreenDeviation = 500.0f;
+        float allowedScreenDeviation = 300.0f;
 
 // Compute distance from the screen center to the ghost's projected position
         float distanceFromCenter = Vector3.Distance(screenPosition, screenCenter);
@@ -195,16 +194,20 @@ public class Ghost : MonoBehaviour
         {
             // Raycast to check for obstruction
             float distanceToGhost = Vector3.Distance(transform.position, player.transform.position);
-            
-            Vector3 directionToGhost = (transform.position - player.transform.position).normalized;
-            if (!Physics.Raycast(player.transform.position, directionToGhost, distanceToGhost, obstructionMask))
+        
+            if (!Physics.Raycast(player.transform.position, player.transform.forward, distanceToGhost, obstructionMask))
             {
                 if (player.GetComponent<PlayerCharacter>().bFlashlightActive)
                 {
                     Debug.Log("Player is facing the ghost and not obstructed.");
-
+                    transform.LookAt((player.transform.position - transform.position).normalized);
+                    
                     // Adjust the alpha value
-                    ghostMaterialColor.a = Mathf.Lerp(ghostMaterialColor.a, 0, Time.deltaTime * 1.0f);
+                    ghostMaterialColor.a -= Time.deltaTime * .4f;
+                    if (ghostMaterialColor.a < 0f)
+                    {
+                        ghostMaterialColor.a = 0f;
+                    }
                     ghostMaterial.color = ghostMaterialColor;
 
                     // Set the ghost into patrol mode
@@ -215,8 +218,13 @@ public class Ghost : MonoBehaviour
             {
                 // Obstruction detected
                 Debug.Log("Player is facing the ghost, but there is an obstruction.");
-                ghostMaterialColor.a = Mathf.Lerp(ghostMaterialColor.a, 6f, Time.deltaTime * 1.0f);
+                ghostMaterialColor.a += Time.deltaTime * .08f;
+                if (ghostMaterialColor.a > 1f)
+                {
+                    ghostMaterialColor.a = 1f;
+                }
                 ghostMaterial.color = ghostMaterialColor;
+                transform.LookAt(new Vector3(player.transform.position.x, 0, player.transform.position.z));
             }
         }
         else
@@ -225,6 +233,7 @@ public class Ghost : MonoBehaviour
             Debug.Log("Player is not facing the ghost.");
             ghostMaterialColor.a = Mathf.Lerp(ghostMaterialColor.a, .6f, Time.deltaTime * 1.0f);
             ghostMaterial.color = ghostMaterialColor;
+            transform.LookAt(new Vector3(player.transform.position.x, 0, player.transform.position.z));
         }
        
     }
