@@ -70,7 +70,6 @@ public class PlayerController : MonoBehaviour
         //footstep
         if(Input.GetButtonDown("Interact"))
         {
-
             Interact(Player.InteractObject);
         }
         

@@ -39,6 +39,12 @@ public class PlayerCharacter : MonoBehaviour
         ModifyFlashlightBattery(FlashlightDrainSpeed);
     }
 
+    // to increment the battery, the usage is in Battery.cs
+    public void IncrementBattery(double value)
+    {
+        FlashlightBattery = Math.Clamp(FlashlightBattery + value, 0, 100);
+    }
+
     void ModifyFlashlightBattery(double value)
     {
             if (bFlashlightActive) 
@@ -173,53 +179,6 @@ public class PlayerCharacter : MonoBehaviour
                 }
             }
         }
-    }
-
-    // if the player collect the battery then the battery will be incremented
-    void OnTriggerEnter(Collider other)
-    {
-        // check if the player has collided with a battery
-        if (other.gameObject.CompareTag("Battery20"))
-        {
-            // increment the battery value by the specified amount
-            IncrementBattery(amountSmallBattery);
-
-            // remove the battery from the scene
-            Destroy(other.gameObject);
-
-            // remove the battery from the list if it is in the list.
-
-            if (batteries.Contains(other.gameObject))
-            {
-                batteries.Remove(other.gameObject);
-            }
-            Debug.Log("Player collected battery with 20");
-
-        }
-        else if (other.gameObject.CompareTag("Battery50"))
-        {
-            // increment the battery value by the specified amount
-            IncrementBattery(amountBigBattery);
-
-            // remove the battery from the scene
-            Destroy(other.gameObject);
-
-            // remove the battery from the list if it is in the list.
-
-            if (batteries.Contains(other.gameObject))
-            {
-                batteries.Remove(other.gameObject);
-            }
-            Debug.Log("Player collected battery with 50");
-        }
-    }
-
-    // modify the battery when the player collect it.
-    public void IncrementBattery(float amount)
-    {
-        FlashlightBattery += amount;
-        if (FlashlightBattery > 100.0)
-            FlashlightBattery = 100.0;
     }
 }
 
