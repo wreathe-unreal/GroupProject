@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.AI.Navigation;
 using UnityEngine;
 
@@ -17,9 +18,12 @@ public class DoorController : InteractableObject
 {
     public EDoorName DoorName;
     // Start is called before the first frame update
-    public GameObject textObjectFront; // Reference to the text object
-    public GameObject textObjectBack; // Reference to the text object
-    public float displayDuration; // Duration to display the text
+    public GameObject textObject; // Reference to the text object
+    public GameObject targetText;
+    public TextMeshProUGUI text;
+    public ActionPrompt prompt;
+    public int counter = 0;
+
     public Animator AnimationController;
     public AudioSource LockedDoorAudio;
     public AudioSource OpenDoorAudio;
@@ -29,33 +33,27 @@ public class DoorController : InteractableObject
     
     void Start()
     {
-        textObjectFront.SetActive(false);
-        textObjectBack.SetActive(false);
-        displayDuration = .1f; // Duration to display the text
-        AudioSource LockedDoorAudio = GetComponents<AudioSource>()[0];
-        AudioSource OpenDoorAudio = GetComponents<AudioSource>()[1];
-
-
-    }
-
-   
-    void Update()
-    {
-        
+        targetText = GameObject.Find("UI/Popup");
+        prompt = targetText.GetComponent<ActionPrompt>();
+        text = textObject.GetComponent<TextMeshProUGUI>();
+        textObject.SetActive(false);
     }
 
     public void ShowText()
     {
-        textObjectFront.SetActive(true);
-        textObjectBack.SetActive(true);
-
+        if (!bDoorIsClosed)
+        {
+            if (counter == 0)
+                counter++;
+            prompt.activate(text.text);
+        }
     }
 
     public void HideText()
     {
-        textObjectFront.SetActive(false);
-        textObjectBack.SetActive(false);
-
+        if (counter > 0)
+            counter = 0;
+        prompt.deactivate();
     }
 
     public void OpenDoor()
@@ -73,9 +71,6 @@ public class DoorController : InteractableObject
                 OpenDoor();
                 HideText();
                 bDoorIsClosed = false;
-                textObjectFront.transform.parent.gameObject.SetActive(false);
-                textObjectBack.transform.parent.gameObject.SetActive(false);
-            
             }
             else
             {

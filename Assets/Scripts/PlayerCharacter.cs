@@ -118,13 +118,23 @@ public class PlayerCharacter : MonoBehaviour
             {
                 doorScript.ShowText();
             }
-        }
-        if (Vector3.Distance(screenPosition, screenCenter) <= allowedScreenDeviation)
-        {
             Key keyScript = InteractObject.GetComponent<Key>();
             if (keyScript != null)
             {
                 keyScript.ShowText();
+            }
+        }
+        if (Vector3.Distance(screenPosition, screenCenter) > allowedScreenDeviation)
+        {
+            DoorController doorScript = InteractObject.GetComponent<DoorController>();
+            if (doorScript != null && Keys.Contains(doorScript.DoorName))
+            {
+                doorScript.HideText();
+            }
+            Key keyScript = InteractObject.GetComponent<Key>();
+            if (keyScript != null)
+            {
+                keyScript.HideText();
             }
         }
     }
