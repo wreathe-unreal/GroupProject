@@ -7,6 +7,8 @@ TagManager:
   - Key
   - Door
   - Enemy
+  - Battery20
+  - Battery50
   layers:
   - Default
   - TransparentFX

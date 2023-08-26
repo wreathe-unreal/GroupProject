@@ -17,6 +17,12 @@ public class PlayerCharacter : MonoBehaviour
     public AudioSource FlashlightAudioSource;
     public InteractableObject InteractObject;
     // Start is called before the first frame update
+
+    // battery attributes
+    public float amountSmallBattery = 20.0f;
+    public float amountBigBattery = 50.0f;
+    public List<GameObject> batteries;
+
     void Start()
     {
         var surface = GameObject.FindObjectOfType<NavMeshSurface>();
@@ -167,6 +173,52 @@ public class PlayerCharacter : MonoBehaviour
                 }
             }
         }
+    }
+
+    // if the player collect the battery then the battery will be incremented
+    void OnTriggerEnter(Collider other)
+    {
+        // check if the player has collided with a battery
+        if (other.gameObject.CompareTag("Battery20"))
+        {
+            // increment the battery value by the specified amount
+            IncrementBattery(amountSmallBattery);
+
+            // remove the battery from the scene
+            Destroy(other.gameObject);
+
+            // remove the battery from the list if it is in the list.
+
+            if (batteries.Contains(other.gameObject))
+            {
+                batteries.Remove(other.gameObject);
+            }
+            Debug.Log("Player collected battery with 20");
+
+        }
+        else if (other.gameObject.CompareTag("Battery50"))
+        {
+            // increment the battery value by the specified amount
+            IncrementBattery(amountBigBattery);
+
+            // remove the battery from the scene
+            Destroy(other.gameObject);
+
+            // remove the battery from the list if it is in the list.
+
+            if (batteries.Contains(other.gameObject))
+            {
+                batteries.Remove(other.gameObject);
+            }
+            Debug.Log("Player collected battery with 50");
+        }
+    }
+
+    // modify the battery when the player collect it.
+    public void IncrementBattery(float amount)
+    {
+        FlashlightBattery += amount;
+
     }
 }
 
