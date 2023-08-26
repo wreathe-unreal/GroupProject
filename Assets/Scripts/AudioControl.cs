@@ -2,31 +2,41 @@ using UnityEngine;
 
 public class BGMController : MonoBehaviour
 {
-    public AudioSource audioSource;
+    public AudioSource[] audioSources;
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        audioSources = GetComponents<AudioSource>();
+        audioSources[0].Play();
     }
 
     public void PlayBGM()
     {
-        if (!audioSource.isPlaying)
+        if (!audioSources[0].isPlaying)
         {
-            audioSource.Play();
+            audioSources[0].Play();
+        }
+        if (!audioSources[1].isPlaying)
+        {
+            audioSources[1].Play();
         }
     }
 
     public void StopBGM()
     {
-        if (audioSource.isPlaying)
+        if (audioSources[0].isPlaying)
         {
-            audioSource.Stop();
+            audioSources[0].Stop();
+        }
+        if (audioSources[1].isPlaying)
+        {
+            audioSources[1].Stop();
         }
     }
 
     public void SetVolume(float volume)
     {
-        audioSource.volume = volume;
+        audioSources[0].volume *= volume;
+        audioSources[1].volume *= volume;
     }
 }
