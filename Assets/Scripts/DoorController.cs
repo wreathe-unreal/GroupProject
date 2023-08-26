@@ -41,7 +41,7 @@ public class DoorController : InteractableObject
 
     public void ShowText()
     {
-        if (!bDoorIsClosed)
+        if (bDoorIsClosed)
         {
             if (counter == 0)
                 counter++;
