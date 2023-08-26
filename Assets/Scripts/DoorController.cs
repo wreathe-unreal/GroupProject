@@ -31,8 +31,6 @@ public class DoorController : InteractableObject
         displayDuration = .1f; // Duration to display the text
         AudioSource LockedDoorAudio = GetComponents<AudioSource>()[0];
         AudioSource OpenDoorAudio = GetComponents<AudioSource>()[1];
-
-
     }
 
    
@@ -45,14 +43,12 @@ public class DoorController : InteractableObject
     {
         textObjectFront.SetActive(true);
         textObjectBack.SetActive(true);
-
     }
 
     public void HideText()
     {
         textObjectFront.SetActive(false);
         textObjectBack.SetActive(false);
-
     }
 
     public void OpenDoor()
