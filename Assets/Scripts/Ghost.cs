@@ -42,8 +42,10 @@ public class Ghost : MonoBehaviour
     private MeshRenderer ghostMesh;
     private Color ghostMaterialColor;
     private Material ghostMaterial;
-
+    private bool bGhostRespawnTimerFinished = true;
     private AudioSource[] audioSources;
+    private bool bRecentlyRespawned = false;
+    private float RecentlyRespawnedTimer = 0.0f;
     
     // Start is called before the first frame update
     void Start()
@@ -53,7 +55,7 @@ public class Ghost : MonoBehaviour
         ghostMesh = gameObject.GetComponentInChildren<MeshRenderer>();
         ghostMaterial = ghostMesh.material; 
         ghostMaterialColor = ghostMaterial.color;
-        ghostMaterialColor.a = .3f;
+        ghostMaterialColor.a = .65f;
         player = GameObject.FindGameObjectWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
         ghostAnimate = GetComponent<Animator>();
@@ -74,8 +76,7 @@ public class Ghost : MonoBehaviour
     void Update()
     {
         UpdateGhostBehavior();
-        UpdateGhostAggression();
-
+        Debug.Log(ghostMaterialColor.a);
     }
 
     private void UpdateGhostBehavior ()
@@ -224,21 +225,27 @@ public class Ghost : MonoBehaviour
                     // Adjust the alpha value
                     if (ghostMaterialColor.a > .2f)
                     {
-                        ghostMaterialColor.a -= Time.deltaTime * 12f;
+                        ghostMaterialColor.a -= Time.deltaTime * 8f;
                     }
 
                     if (ghostMaterialColor.a <= .2f && ghostMaterialColor.a > .1f)
                     {
-                        ghostMaterialColor.a -= Time.deltaTime * 6;
+                        ghostMaterialColor.a -= Time.deltaTime * 5;
                     }
 
                     if (ghostMaterialColor.a <= .1f)
                     {
-                        ghostMaterialColor.a -= Time.deltaTime * .04f;
+                        ghostMaterialColor.a -= Time.deltaTime * .03f;
                     }
                     if (ghostMaterialColor.a < 0f)
                     {
                         ghostMaterialColor.a = 0f;
+                        bGhostRespawnTimerFinished = false;
+                        if (!bRecentlyRespawned)
+                        {
+                            StartGhostRespawnTimer();
+                            RecentlyRespawnedTimer += 5.0f;
+                        }
                     }
                     ghostMaterial.color = ghostMaterialColor;
 
@@ -250,35 +257,40 @@ public class Ghost : MonoBehaviour
             {
                 // Obstruction detected
                 //Debug.Log("Player is facing the ghost, but there is an obstruction.");
-                if (ghostMaterialColor.a > .2f)
-                {
-                    ghostMaterialColor.a += Time.deltaTime * 12f;
-                }
-
-                if (ghostMaterialColor.a <= .2f && ghostMaterialColor.a > .1f)
-                {
-                    ghostMaterialColor.a += Time.deltaTime * 6;
-                }
-
-                if (ghostMaterialColor.a <= .1f)
-                {
-                    ghostMaterialColor.a += Time.deltaTime * .04f;
-                }
-                if (ghostMaterialColor.a < 0f)
-                {
-                    ghostMaterialColor.a = 0f;
-                }
-                if (ghostMaterialColor.a > .3f)
-                {
-                    ghostMaterialColor.a = .3f;
-                }
-                ghostMaterial.color = ghostMaterialColor;
+                ReviveGhost();
             }
         }
         else
         {
             // Player is not facing the ghost
             //Debug.Log("Player is not facing the ghost.");
+            ReviveGhost();
+        }
+       
+    }
+    
+    
+
+    // Function to call when you want to start the respawn timer
+    public void StartGhostRespawnTimer()
+    {
+        StartCoroutine(GhostRespawnTimer());
+    }
+    // Coroutine for the 4-second timer
+    IEnumerator GhostRespawnTimer()
+    {
+        bGhostRespawnTimerFinished = false; // Reset the flag
+        yield return new WaitForSeconds(4.0f); // Wait for 4 seconds
+        bGhostRespawnTimerFinished = true; // Set the flag to true
+        bRecentlyRespawned = true;
+    }
+    
+    void ReviveGhost()
+    {
+        if (bGhostRespawnTimerFinished)
+        {
+            // Obstruction detected
+            //Debug.Log("Player is facing the ghost, but there is an obstruction.");
             if (ghostMaterialColor.a > .2f)
             {
                 ghostMaterialColor.a += Time.deltaTime * 12f;
@@ -293,40 +305,25 @@ public class Ghost : MonoBehaviour
             {
                 ghostMaterialColor.a += Time.deltaTime * .04f;
             }
-            if (ghostMaterialColor.a > .3f)
+
+            if (ghostMaterialColor.a > .65f)
             {
-                ghostMaterialColor.a = .3f;
+                ghostMaterialColor.a = .65f;
             }
+
             ghostMaterial.color = ghostMaterialColor;
         }
-       
     }
 
-    void UpdateGhostAggression()
+    void bRecentlyRespawnedTimer(bool bRecentlyRespawned)
     {
-        Debug.Log(ghostMaterialColor.a);
-        if (ghostMaterialColor.a > .4)
+        if (RecentlyRespawnedTimer <= 0)
         {
-            //Debug.Log("aggressive");
-            if (audioSources[0] != null)
-            {
-                if (!audioSources[0].isPlaying)
-                {
-                    audioSources[0].Play();
-                } 
-            }
+            bRecentlyRespawned = false;
         }
-        else if(ghostMaterialColor.a < .4)
+        if (bRecentlyRespawned)
         {
-            //Debug.Log("passive");
-            if (audioSources[1] != null)
-            {
-                if (!audioSources[1].isPlaying)
-                {
-                    audioSources[1].Play();
-                    
-                } 
-            }
+            RecentlyRespawnedTimer -= Time.deltaTime;
         }
     }
     

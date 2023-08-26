@@ -7532,15 +7532,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2858776903752696946, guid: fbf47021a2f3ee24f98212e6d45548b2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2990140306471741537, guid: fbf47021a2f3ee24f98212e6d45548b2, type: 3}
       propertyPath: m_Volume
-      value: 0.221
+      value: 0.748
       objectReference: {fileID: 0}
     - target: {fileID: 2990140306471741537, guid: fbf47021a2f3ee24f98212e6d45548b2, type: 3}
       propertyPath: MaxDistance
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990140306471741537, guid: fbf47021a2f3ee24f98212e6d45548b2, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3056952026952808700, guid: fbf47021a2f3ee24f98212e6d45548b2, type: 3}
       propertyPath: m_Enabled
@@ -30781,7 +30785,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e16548eb41fd18748bcfeb5770cd9d32, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.168
+  m_Volume: 0.064
   m_Pitch: 0.45
   Loop: 1
   Mute: 0

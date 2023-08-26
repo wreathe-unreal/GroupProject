@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e68a5ed6d53f0749983875f0b81fa0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 11
-  angle: 151
+  radius: 13
+  angle: 54
   playerRef: {fileID: 0}
   obstructionMask:
     serializedVersion: 2
