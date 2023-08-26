@@ -6,6 +6,8 @@ using TMPro;
 public class ActionPrompt : MonoBehaviour
 {
     private TextMeshProUGUI text;
+
+    public int counter;
     public string objString;
 
     // Start is called before the first frame update
@@ -16,13 +18,21 @@ public class ActionPrompt : MonoBehaviour
 
     public void activate(string str)
     {
-        objString = str;
-        text.text = objString;
+        if (counter == 0)
+        {
+            counter++;
+            objString = str;
+            text.text = objString;
+        }
     }
 
     public void deactivate()
     {
-        objString = "";
-        text.text = objString;
+        if (counter == 1)
+        {
+            objString = "";
+            text.text = objString;
+            counter--;
+        }
     }
 }
