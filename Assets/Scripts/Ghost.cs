@@ -53,7 +53,7 @@ public class Ghost : MonoBehaviour
         ghostMesh = gameObject.GetComponentInChildren<MeshRenderer>();
         ghostMaterial = ghostMesh.material; 
         ghostMaterialColor = ghostMaterial.color;
-        ghostMaterialColor.a = .55f;
+        ghostMaterialColor.a = .3f;
         player = GameObject.FindGameObjectWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
         ghostAnimate = GetComponent<Animator>();
@@ -222,7 +222,20 @@ public class Ghost : MonoBehaviour
                     //Debug.Log("Player is facing the ghost and not obstructed.");
                     
                     // Adjust the alpha value
-                    ghostMaterialColor.a -= Time.deltaTime * Math.Max((ghostMaterialColor.a *.99f), 0.1f);
+                    if (ghostMaterialColor.a > .2f)
+                    {
+                        ghostMaterialColor.a -= Time.deltaTime * 12f;
+                    }
+
+                    if (ghostMaterialColor.a <= .2f && ghostMaterialColor.a > .1f)
+                    {
+                        ghostMaterialColor.a -= Time.deltaTime * 6;
+                    }
+
+                    if (ghostMaterialColor.a <= .1f)
+                    {
+                        ghostMaterialColor.a -= Time.deltaTime * .04f;
+                    }
                     if (ghostMaterialColor.a < 0f)
                     {
                         ghostMaterialColor.a = 0f;
@@ -237,10 +250,27 @@ public class Ghost : MonoBehaviour
             {
                 // Obstruction detected
                 //Debug.Log("Player is facing the ghost, but there is an obstruction.");
-                ghostMaterialColor.a += Time.deltaTime * Math.Max((ghostMaterialColor.a *.99f), 0.02f);
-                if (ghostMaterialColor.a > .55f)
+                if (ghostMaterialColor.a > .2f)
                 {
-                    ghostMaterialColor.a = .55f;
+                    ghostMaterialColor.a += Time.deltaTime * 12f;
+                }
+
+                if (ghostMaterialColor.a <= .2f && ghostMaterialColor.a > .1f)
+                {
+                    ghostMaterialColor.a += Time.deltaTime * 6;
+                }
+
+                if (ghostMaterialColor.a <= .1f)
+                {
+                    ghostMaterialColor.a += Time.deltaTime * .04f;
+                }
+                if (ghostMaterialColor.a < 0f)
+                {
+                    ghostMaterialColor.a = 0f;
+                }
+                if (ghostMaterialColor.a > .3f)
+                {
+                    ghostMaterialColor.a = .3f;
                 }
                 ghostMaterial.color = ghostMaterialColor;
             }
@@ -249,10 +279,23 @@ public class Ghost : MonoBehaviour
         {
             // Player is not facing the ghost
             //Debug.Log("Player is not facing the ghost.");
-            ghostMaterialColor.a += Time.deltaTime * Math.Max((ghostMaterialColor.a *.99f), 0.02f);
-            if (ghostMaterialColor.a > .55f)
+            if (ghostMaterialColor.a > .2f)
             {
-                ghostMaterialColor.a = .55f;
+                ghostMaterialColor.a += Time.deltaTime * 12f;
+            }
+
+            if (ghostMaterialColor.a <= .2f && ghostMaterialColor.a > .1f)
+            {
+                ghostMaterialColor.a += Time.deltaTime * 6;
+            }
+
+            if (ghostMaterialColor.a <= .1f)
+            {
+                ghostMaterialColor.a += Time.deltaTime * .04f;
+            }
+            if (ghostMaterialColor.a > .3f)
+            {
+                ghostMaterialColor.a = .3f;
             }
             ghostMaterial.color = ghostMaterialColor;
         }
@@ -261,9 +304,10 @@ public class Ghost : MonoBehaviour
 
     void UpdateGhostAggression()
     {
+        Debug.Log(ghostMaterialColor.a);
         if (ghostMaterialColor.a > .4)
         {
-            Debug.Log("aggressive");
+            //Debug.Log("aggressive");
             if (audioSources[0] != null)
             {
                 if (!audioSources[0].isPlaying)
@@ -274,7 +318,7 @@ public class Ghost : MonoBehaviour
         }
         else if(ghostMaterialColor.a < .4)
         {
-            Debug.Log("passive");
+            //Debug.Log("passive");
             if (audioSources[1] != null)
             {
                 if (!audioSources[1].isPlaying)
