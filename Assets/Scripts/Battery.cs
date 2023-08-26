@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class Battery : InteractableObject
 {
@@ -14,7 +14,6 @@ public class Battery : InteractableObject
     public float batteryValue;  // one type of battery
     public string batteryType;
 
-    // Start is called before the first frame update
     void Start()
     {
         targetText = GameObject.Find("UI/Popup");
@@ -27,18 +26,18 @@ public class Battery : InteractableObject
 
     public void ShowText()
     {
-        prompt.activate(text.text);         // Trigger function to display UI popup
+        prompt.activate(text.text);
     }
 
     public void HideText()
     {
-        prompt.deactivate();                // Trigger function to empty UI popup
+        prompt.deactivate();
     }
-    
+
     public override void Interact(PlayerCharacter player)
     {
         player.IncrementBattery(batteryValue);
-        HideText();                         // Trigger function to empty UI popup
-        Destroy(gameObject);                // Destroy GameObject as it is no longer needed
+        HideText();
+        Destroy(gameObject);
     }
 }
