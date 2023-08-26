@@ -75,7 +75,7 @@ public class Ghost : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateGhostBehavior();
+        UpdateGhostBehavior();  
         Debug.Log(ghostMaterialColor.a);
     }
 
@@ -206,7 +206,7 @@ public class Ghost : MonoBehaviour
         Vector3 screenPosition = playerCamera.WorldToScreenPoint(transform.position + new Vector3(0f, 1.6f, 0f)); //increase the ghost's origin 
         Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
         // Define allowed screen deviation from the center
-        float allowedScreenDeviation = 300.0f;
+        float allowedScreenDeviation = 250.0f;
 
 // Compute distance from the screen center to the ghost's projected position
         float distanceFromCenter = Vector3.Distance(screenPosition, screenCenter);
@@ -221,36 +221,7 @@ public class Ghost : MonoBehaviour
                 if (player.GetComponent<PlayerCharacter>().bFlashlightActive)
                 {
                     //Debug.Log("Player is facing the ghost and not obstructed.");
-                    
-                    // Adjust the alpha value
-                    if (ghostMaterialColor.a > .2f)
-                    {
-                        ghostMaterialColor.a -= Time.deltaTime * 8f;
-                    }
-
-                    if (ghostMaterialColor.a <= .2f && ghostMaterialColor.a > .1f)
-                    {
-                        ghostMaterialColor.a -= Time.deltaTime * 5;
-                    }
-
-                    if (ghostMaterialColor.a <= .1f)
-                    {
-                        ghostMaterialColor.a -= Time.deltaTime * .03f;
-                    }
-                    if (ghostMaterialColor.a < 0f)
-                    {
-                        ghostMaterialColor.a = 0f;
-                        bGhostRespawnTimerFinished = false;
-                        if (!bRecentlyRespawned)
-                        {
-                            StartGhostRespawnTimer();
-                            RecentlyRespawnedTimer += 5.0f;
-                        }
-                    }
-                    ghostMaterial.color = ghostMaterialColor;
-
-                    // Set the ghost into patrol mode
-                    bSpotted = false;
+                    BanishGhost();
                 } 
             }
             else
@@ -282,7 +253,6 @@ public class Ghost : MonoBehaviour
         bGhostRespawnTimerFinished = false; // Reset the flag
         yield return new WaitForSeconds(4.0f); // Wait for 4 seconds
         bGhostRespawnTimerFinished = true; // Set the flag to true
-        bRecentlyRespawned = true;
     }
     
     void ReviveGhost()
@@ -315,16 +285,36 @@ public class Ghost : MonoBehaviour
         }
     }
 
-    void bRecentlyRespawnedTimer(bool bRecentlyRespawned)
+    void BanishGhost()
     {
-        if (RecentlyRespawnedTimer <= 0)
+        // Adjust the alpha value
+        if (ghostMaterialColor.a > .2f)
         {
-            bRecentlyRespawned = false;
+            ghostMaterialColor.a -= Time.deltaTime * 8f;
         }
-        if (bRecentlyRespawned)
+
+        if (ghostMaterialColor.a <= .2f && ghostMaterialColor.a > .1f)
         {
-            RecentlyRespawnedTimer -= Time.deltaTime;
+            ghostMaterialColor.a -= Time.deltaTime * 5;
         }
+
+        if (ghostMaterialColor.a <= .1f)
+        {
+            ghostMaterialColor.a -= Time.deltaTime * .03f;
+        }
+        if (ghostMaterialColor.a < 0f)
+        {
+            ghostMaterialColor.a = 0f;
+                        
+            if (!bRecentlyRespawned)
+            {
+                StartGhostRespawnTimer();
+            }
+        }
+        ghostMaterial.color = ghostMaterialColor;
+
+        // Set the ghost into patrol mode
+        bSpotted = false;
     }
     
     
