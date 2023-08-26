@@ -113,6 +113,12 @@ public class PlayerCharacter : MonoBehaviour
                 doorScript.HideText();
                 return;
             }
+            Battery battScript = InteractObject as Battery;
+            if (battScript != null)
+            {
+                battScript.HideText();
+                return;
+            }
         } 
         
         // Project the key's world position to screen space
@@ -135,6 +141,11 @@ public class PlayerCharacter : MonoBehaviour
             {
                 keyScript.ShowText();
             }
+            Battery battScript = InteractObject.GetComponent<Battery>();
+            if (battScript != null)
+            {
+                battScript.ShowText();
+            }
         }
         if (Vector3.Distance(screenPosition, screenCenter) > allowedScreenDeviation)
         {
@@ -147,6 +158,11 @@ public class PlayerCharacter : MonoBehaviour
             if (keyScript != null)
             {
                 keyScript.HideText();
+            }
+            Battery battScript = InteractObject.GetComponent<Battery>();
+            if (battScript != null)
+            {
+                battScript.HideText();
             }
         }
     }

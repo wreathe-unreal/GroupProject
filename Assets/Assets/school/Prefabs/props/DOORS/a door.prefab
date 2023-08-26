@@ -383,7 +383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7299766649106419285, guid: 14ed0f005a73faf4aa2fa8fc21d6823e, type: 3}
       propertyPath: m_text
-      value: '[E] Open Door'
+      value: '[E] - Open Door'
       objectReference: {fileID: 0}
     - target: {fileID: 7299766649106419285, guid: 14ed0f005a73faf4aa2fa8fc21d6823e, type: 3}
       propertyPath: m_fontSize

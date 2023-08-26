@@ -12,6 +12,7 @@ public class Battery : InteractableObject
 
     // battery attributes
     public float batteryValue;  // one type of battery
+    public string batteryType;
 
     void Start()
     {
@@ -19,6 +20,8 @@ public class Battery : InteractableObject
         prompt = targetText.GetComponent<ActionPrompt>();
         text = textObject.GetComponent<TextMeshProUGUI>();
         textObject.SetActive(false);
+        batteryType = gameObject.name;
+        text.text = text.text + batteryType;
     }
 
     public void ShowText()
