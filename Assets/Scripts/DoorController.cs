@@ -5,9 +5,12 @@ using UnityEngine;
 
 public enum EDoorName
 {
-    RedDoor = 0, //or whatever you want to name it
-    BlueDoor = 1,
-    GreenDoor = 2
+    EscapeDoor = 0,
+    ProjectorRoom = 1,
+    ClassRoom = 2,
+    PrincipalRoom = 3,
+    FarClassRoom = 4,
+    Cafeteria =5
 }
 
 public class DoorController : InteractableObject
