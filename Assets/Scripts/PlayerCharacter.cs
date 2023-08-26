@@ -6,18 +6,16 @@ using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
 {
-    private GameObject OverlapDoor;
-    private GameObject OverlapKey;
-    private PlayerController Controller;
-
     public double FlashlightDrainSpeed = -1.0;
     public bool bFlashlightAcquired = true;
     public bool bFlashlightActive = true;
     public List<EDoorName> Keys;
+    private GameObject OverlapDoor;
+    private GameObject OverlapKey;
     public double FlashlightBattery = 100.0;
+    private PlayerController Controller;
     public AudioSource FlashlightAudioSource;
     public InteractableObject InteractObject;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -89,40 +87,44 @@ public class PlayerCharacter : MonoBehaviour
         {
             return;
         }
+        if (bTriggerExit)
+        {
+            Key keyScript = InteractObject as Key;
+            if (keyScript != null)
+            {
+                keyScript.HideText();
+                return;
+            }
+            DoorController doorScript = InteractObject as DoorController;
+            if (doorScript != null)
+            {
+                doorScript.HideText();
+                return;
+            }
+        } 
         
         // Project the key's world position to screen space
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(InteractObject.transform.position);
 
         // Determine the center of the screen
         Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
-
-        // Get required components
-        DoorController doorScript = InteractObject.GetComponent<DoorController>();
-        Key keyScript = InteractObject.GetComponent<Key>();
-
-        float allowedScreenDeviation = 150.0f;
+                    
+        float allowedScreenDeviation = 300.0f;
         // Check if the key is within the allowed deviation from the center of the screen
         if (Vector3.Distance(screenPosition, screenCenter) <= allowedScreenDeviation)
         {
+            DoorController doorScript = InteractObject.GetComponent<DoorController>();
             if (doorScript != null && Keys.Contains(doorScript.DoorName))
             {
                 doorScript.ShowText();
             }
+        }
+        if (Vector3.Distance(screenPosition, screenCenter) <= allowedScreenDeviation)
+        {
+            Key keyScript = InteractObject.GetComponent<Key>();
             if (keyScript != null)
             {
                 keyScript.ShowText();
-            }
-        }
-        else if (Vector3.Distance(screenPosition, screenCenter) > allowedScreenDeviation)
-        {
-
-            if (doorScript != null && Keys.Contains(doorScript.DoorName))
-            {
-                doorScript.HideText();
-            }
-            if (keyScript != null)
-            {
-                keyScript.HideText();
             }
         }
     }
