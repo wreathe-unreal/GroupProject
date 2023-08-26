@@ -27,6 +27,8 @@ public class Ghost : MonoBehaviour
     [SerializeField]
     private int pursuitDur = 30;
 
+    private bool bGhostAggressive = false;
+
     Animator ghostAnimate;
 
     private bool onetime = false;
@@ -40,14 +42,18 @@ public class Ghost : MonoBehaviour
     private MeshRenderer ghostMesh;
     private Color ghostMaterialColor;
     private Material ghostMaterial;
+
+    private AudioSource[] audioSources;
+    
     // Start is called before the first frame update
     void Start()
     {
+        audioSources = GetComponents<AudioSource>();
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         ghostMesh = gameObject.GetComponentInChildren<MeshRenderer>();
         ghostMaterial = ghostMesh.material; 
         ghostMaterialColor = ghostMaterial.color;
-        ghostMaterialColor.a = .6f;
+        ghostMaterialColor.a = .55f;
         player = GameObject.FindGameObjectWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
         ghostAnimate = GetComponent<Animator>();
@@ -67,11 +73,12 @@ public class Ghost : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GhostState();
+        UpdateGhostBehavior();
+        UpdateGhostAggression();
 
     }
 
-    private void GhostState ()
+    private void UpdateGhostBehavior ()
     {
         float dist = Vector3.Distance(player.transform.position, transform.position);
 
@@ -202,8 +209,6 @@ public class Ghost : MonoBehaviour
 
 // Compute distance from the screen center to the ghost's projected position
         float distanceFromCenter = Vector3.Distance(screenPosition, screenCenter);
-        Debug.Log(distanceFromCenter);
-        Debug.DrawLine(transform.position + new Vector3(0f, 1.6f, 0f), transform.position + new Vector3(0f, 1.7f, 0f));
         
         if (distanceFromCenter <= allowedScreenDeviation)
         {
@@ -214,10 +219,10 @@ public class Ghost : MonoBehaviour
             {
                 if (player.GetComponent<PlayerCharacter>().bFlashlightActive)
                 {
-                    Debug.Log("Player is facing the ghost and not obstructed.");
+                    //Debug.Log("Player is facing the ghost and not obstructed.");
                     
                     // Adjust the alpha value
-                    ghostMaterialColor.a -= Time.deltaTime * Math.Max((ghostMaterialColor.a *.99f), 0.3f);
+                    ghostMaterialColor.a -= Time.deltaTime * Math.Max((ghostMaterialColor.a *.99f), 0.1f);
                     if (ghostMaterialColor.a < 0f)
                     {
                         ghostMaterialColor.a = 0f;
@@ -231,11 +236,11 @@ public class Ghost : MonoBehaviour
             else
             {
                 // Obstruction detected
-                Debug.Log("Player is facing the ghost, but there is an obstruction.");
-                ghostMaterialColor.a += Time.deltaTime * Math.Max((ghostMaterialColor.a *.99f), 0.1f);
-                if (ghostMaterialColor.a > .6f)
+                //Debug.Log("Player is facing the ghost, but there is an obstruction.");
+                ghostMaterialColor.a += Time.deltaTime * Math.Max((ghostMaterialColor.a *.99f), 0.02f);
+                if (ghostMaterialColor.a > .55f)
                 {
-                    ghostMaterialColor.a = .6f;
+                    ghostMaterialColor.a = .55f;
                 }
                 ghostMaterial.color = ghostMaterialColor;
             }
@@ -243,30 +248,44 @@ public class Ghost : MonoBehaviour
         else
         {
             // Player is not facing the ghost
-            Debug.Log("Player is not facing the ghost.");
-            ghostMaterialColor.a += Time.deltaTime * Math.Max((ghostMaterialColor.a *.99f), 0.1f);
-            if (ghostMaterialColor.a > .6f)
+            //Debug.Log("Player is not facing the ghost.");
+            ghostMaterialColor.a += Time.deltaTime * Math.Max((ghostMaterialColor.a *.99f), 0.02f);
+            if (ghostMaterialColor.a > .55f)
             {
-                ghostMaterialColor.a = .6f;
+                ghostMaterialColor.a = .55f;
             }
             ghostMaterial.color = ghostMaterialColor;
         }
        
     }
 
-    bool bGhostAlphaAggressive()
+    void UpdateGhostAggression()
     {
         if (ghostMaterialColor.a > .4)
         {
-            return true;
+            Debug.Log("aggressive");
+            if (audioSources[0] != null)
+            {
+                if (!audioSources[0].isPlaying)
+                {
+                    audioSources[0].Play();
+                } 
+            }
         }
-        return false;
+        else if(ghostMaterialColor.a < .4)
+        {
+            Debug.Log("passive");
+            if (audioSources[1] != null)
+            {
+                if (!audioSources[1].isPlaying)
+                {
+                    audioSources[1].Play();
+                    
+                } 
+            }
+        }
     }
-
-    void AlphaBasedCollision()
-    {
-        
-    }
+    
     
     
 }
