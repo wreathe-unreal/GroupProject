@@ -115,7 +115,7 @@ public class PlayerCharacter : MonoBehaviour
         // Determine the center of the screen
         Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
                     
-        float allowedScreenDeviation = 300.0f;
+        float allowedScreenDeviation = 150.0f;
         // Check if the key is within the allowed deviation from the center of the screen
         if (Vector3.Distance(screenPosition, screenCenter) <= allowedScreenDeviation)
         {
@@ -218,7 +218,8 @@ public class PlayerCharacter : MonoBehaviour
     public void IncrementBattery(float amount)
     {
         FlashlightBattery += amount;
-
+        if (FlashlightBattery > 100.0)
+            FlashlightBattery = 100.0;
     }
 }
 
