@@ -10,43 +10,40 @@ using Random = UnityEngine.Random;
 
 public class Ghost : MonoBehaviour
 {
-
+    public float GHOST_ALPHA_MAX = .7f;
+    public float ghost_fast_decay = .75f;
+    public float ghost_mid_decay = .4f;
+    public float ghost_slow_decay = .04f;
+    public float ghost_fast_return = .75f;
+    public float ghost_mid_return = .4f;
+    public float ghost_slow_return = .04f;
     public Transform[] waypoints;
+    public NavMeshAgent agent;
+    public GameObject player;
+    public Animator ghostAnimate;
+    public LayerMask obstructionMask;
+    
+    
+    
     private int currentPoint = 0;
     private Vector3 target;
     private Vector3 direction;
-
-    NavMeshAgent agent;
-    GameObject player;
-
     //FieldOfView FOV;
-    bool bSpotted = false;
+    private bool bSpotted = false;
     private Camera playerCamera;
     private bool inPursuit = false;
     private float pursuitTime = 0;
-    [SerializeField]
     private int pursuitDur = 30;
-
-    private bool bGhostAggressive = false;
-
-    Animator ghostAnimate;
-
-    private bool onetime = false;
     private bool reachStart = false;
-
     private int prevPoint =-1;
-
     private Light ghostGlow;
     private GhostFOV ghostFOV;
-    public LayerMask obstructionMask;
     private MeshRenderer ghostMesh;
     private Color ghostMaterialColor;
     private Material ghostMaterial;
     private bool bGhostRespawnTimerFinished = true;
     private AudioSource[] audioSources;
-    private bool bRecentlyRespawned = false;
-    private float RecentlyRespawnedTimer = 0.0f;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,7 +52,7 @@ public class Ghost : MonoBehaviour
         ghostMesh = gameObject.GetComponentInChildren<MeshRenderer>();
         ghostMaterial = ghostMesh.material; 
         ghostMaterialColor = ghostMaterial.color;
-        ghostMaterialColor.a = .65f;
+        ghostMaterialColor.a = GHOST_ALPHA_MAX;
         player = GameObject.FindGameObjectWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
         ghostAnimate = GetComponent<Animator>();
@@ -75,22 +72,24 @@ public class Ghost : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateGhostBehavior();  
-        Debug.Log(ghostMaterialColor.a);
+        UpdateGhostBehavior();
     }
 
     private void UpdateGhostBehavior ()
     {
-        float dist = Vector3.Distance(player.transform.position, transform.position);
+        Vector3 PlayerTransformAdjusted = player.transform.position;
+        PlayerTransformAdjusted.y = transform.position.y; //set Player Transform Y to Ghosts's for distance calculation
+        
+        float dist = Vector3.Distance(PlayerTransformAdjusted, transform.position);
 
         bSpotted = ghostFOV.bSpotted;
         
         ReactToLight();
         
         //Spotted target
-        if (bSpotted || dist < 1.5f)
+        if ((bSpotted || dist < 3f) && bGhostRespawnTimerFinished)
         {
-            ghostAnimate.SetTrigger("spotted");
+            SpottedAnimation();
             ghostGlow.color = Color.red;
             transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
 
@@ -98,14 +97,14 @@ public class Ghost : MonoBehaviour
 
             inPursuit = true;
             
-            if (dist < 1.45f)
+            if (dist < .75f && ghostMaterialColor.a > .1)
             {
                 CatchPlayer();
             }
 
         }
         //lost sight of target // hunting mode
-        else if (bSpotted == false && inPursuit && pursuitTime < pursuitDur)
+        else if (bSpotted == false && inPursuit && pursuitTime < pursuitDur && bGhostRespawnTimerFinished)
         {
             //ghostAnimate.SetTrigger("searching");
             ghostGlow.color = Color.yellow;
@@ -148,11 +147,10 @@ public class Ghost : MonoBehaviour
 
     void CatchPlayer()
     {
-        if (!onetime && inPursuit)
+        if (inPursuit && ghostMaterialColor.a > .05)
         {
             //Insert Jumpscare etc
-
-            onetime = true;
+            ghostGlow.color = Color.green;
         }
     }
 
@@ -178,6 +176,10 @@ public class Ghost : MonoBehaviour
         }
     }
 
+    void SpottedAnimation()
+    {
+        ghostAnimate.SetTrigger("spotted");
+    }
     void SearchAnimation()
     {
         ghostAnimate.SetTrigger("searching");
@@ -263,22 +265,22 @@ public class Ghost : MonoBehaviour
             //Debug.Log("Player is facing the ghost, but there is an obstruction.");
             if (ghostMaterialColor.a > .2f)
             {
-                ghostMaterialColor.a += Time.deltaTime * 12f;
+                ghostMaterialColor.a += Time.deltaTime * ghost_fast_return;
             }
 
             if (ghostMaterialColor.a <= .2f && ghostMaterialColor.a > .1f)
             {
-                ghostMaterialColor.a += Time.deltaTime * 6;
+                ghostMaterialColor.a += Time.deltaTime * ghost_mid_return;
             }
 
             if (ghostMaterialColor.a <= .1f)
             {
-                ghostMaterialColor.a += Time.deltaTime * .04f;
+                ghostMaterialColor.a += Time.deltaTime * ghost_slow_return;
             }
 
-            if (ghostMaterialColor.a > .65f)
+            if (ghostMaterialColor.a > GHOST_ALPHA_MAX)
             {
-                ghostMaterialColor.a = .65f;
+                ghostMaterialColor.a = GHOST_ALPHA_MAX;
             }
 
             ghostMaterial.color = ghostMaterialColor;
@@ -290,26 +292,23 @@ public class Ghost : MonoBehaviour
         // Adjust the alpha value
         if (ghostMaterialColor.a > .2f)
         {
-            ghostMaterialColor.a -= Time.deltaTime * 8f;
+            ghostMaterialColor.a -= Time.deltaTime * ghost_fast_decay;
         }
 
         if (ghostMaterialColor.a <= .2f && ghostMaterialColor.a > .1f)
         {
-            ghostMaterialColor.a -= Time.deltaTime * 5;
+            ghostMaterialColor.a -= Time.deltaTime* ghost_mid_decay;
         }
 
         if (ghostMaterialColor.a <= .1f)
         {
-            ghostMaterialColor.a -= Time.deltaTime * .03f;
+            ghostMaterialColor.a -= Time.deltaTime * ghost_slow_decay;
         }
         if (ghostMaterialColor.a < 0f)
         {
             ghostMaterialColor.a = 0f;
-                        
-            if (!bRecentlyRespawned)
-            {
+           
                 StartGhostRespawnTimer();
-            }
         }
         ghostMaterial.color = ghostMaterialColor;
 

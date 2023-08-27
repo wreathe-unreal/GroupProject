@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 13
-  angle: 54
+  angle: 82
   playerRef: {fileID: 0}
   obstructionMask:
     serializedVersion: 2
@@ -219,6 +219,13 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 65
+  GHOST_ALPHA_MAX: 0.7
+  ghost_fast_decay: 0.75
+  ghost_mid_decay: 0.4
+  ghost_slow_decay: 0.04
+  ghost_fast_return: 0.75
+  ghost_mid_return: 0.4
+  ghost_slow_return: 0.04
 --- !u!136 &9165403208127933506
 CapsuleCollider:
   m_ObjectHideFlags: 0
