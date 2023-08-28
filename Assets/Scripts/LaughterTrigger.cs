@@ -12,15 +12,12 @@ public class LaughterTrigger : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void Trigger()
     {
-        if (!hasTriggered && other.CompareTag("Player"))
-        {
             hasTriggered = true;      
             audioSource.loop = true;  
             audioSource.Play();       
             Invoke("StopLaughter", 10f); 
-        }
     }
 
     void StopLaughter()

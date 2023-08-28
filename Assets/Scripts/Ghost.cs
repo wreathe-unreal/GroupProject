@@ -23,7 +23,11 @@ public class Ghost : MonoBehaviour
     public Animator AnimationController;
     public LayerMask obstructionMask;
     public AudioSource ghostBanish;
-    
+
+
+
+
+    private JumpScare DeathScene;
     private int currentPoint = 0;
     private Vector3 target;
     private Vector3 direction;
@@ -55,6 +59,7 @@ public class Ghost : MonoBehaviour
         AnimationController = GetComponent<Animator>();
         Glow = GetComponent<Light>();
         ghostFOV = transform.GetChild(1).GetComponent<GhostFOV>();
+        DeathScene = GetComponent<JumpScare>();
         MaterialColor = MaterialComponent.color;
         MaterialComponent.SetFloat("_Mode", 3); // Set to Transparent mode
         MaterialComponent.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
@@ -148,6 +153,7 @@ public class Ghost : MonoBehaviour
         {
             //Insert Jumpscare etc
             Glow.color = Color.green;
+            DeathScene.Trigger();
         }
     }
 
