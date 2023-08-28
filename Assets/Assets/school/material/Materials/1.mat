@@ -628,7 +628,7 @@ Material:
     - _METALNESS: 0
     - _MaskBlendSrc: 1
     - _MaterialID: 1
-    - _Metallic: 0
+    - _Metallic: 0.16
     - _Metallic0: 0
     - _Metallic1: 0
     - _Metallic2: 0
@@ -685,7 +685,7 @@ Material:
     - _SPECULAR_ROUGHNESS: 1
     - _SPECULAR_WEIGHT: 0
     - _Shininess: 0.7
-    - _Smoothness: 0.5
+    - _Smoothness: 0.41
     - _Smoothness0: 0.5
     - _Smoothness1: 0.5
     - _Smoothness2: 0.5

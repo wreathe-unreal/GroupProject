@@ -44141,7 +44141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 23576271713620882, guid: 405988af1bd38ee4fb92e86058b6c926, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 23576271713620882, guid: 405988af1bd38ee4fb92e86058b6c926, type: 3}
       propertyPath: m_DynamicOccludee
