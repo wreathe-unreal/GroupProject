@@ -303,7 +303,7 @@ Transform:
   - {fileID: 6518192307031077751}
   - {fileID: 8246160853047470409}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &3056952026952808700
 NavMeshAgent:
@@ -315,7 +315,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 1.5
+  m_Speed: 1.8
   m_Acceleration: 12
   avoidancePriority: 50
   m_AngularSpeed: 360
@@ -340,9 +340,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MATERIAL_ALPHA_MAX: 0.75
-  FastDecay: 0.8
-  MidDecay: 0.5
-  SlowDecay: 0.05
+  FastDecay: 0.9
+  MidDecay: 0.6
+  SlowDecay: 0.06
   FastReturn: 0.6
   MidReturn: 0.3
   SlowReturn: 0.03

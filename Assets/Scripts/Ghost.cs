@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.XR;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
@@ -101,7 +102,7 @@ public class Ghost : MonoBehaviour
         ReactToLight();
         
         //Spotted target
-        if ((bSpotted || dist < 4f) && bRespawnTimerFinished)
+        if ((bSpotted || dist < 7f) && bRespawnTimerFinished)
         {
             SpottedAnimation();
             Glow.color = Color.red;
@@ -324,7 +325,6 @@ public class Ghost : MonoBehaviour
         {
             if (!ghostBanish.isPlaying)
             {
-                Debug.Log(ghostBanish.clip.name);
                 ghostBanish.Play();
             }
         }
@@ -348,6 +348,7 @@ public class Ghost : MonoBehaviour
     void HideJumpScare()
     {
         jumpScareImage.color = new Color(jumpScareImage.color.r, jumpScareImage.color.g, jumpScareImage.color.b, 0f); // Set alpha to 0
+        SceneManager.LoadScene("MainMenu");
     }
 
 
