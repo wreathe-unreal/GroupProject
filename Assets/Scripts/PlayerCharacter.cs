@@ -67,7 +67,6 @@ public class PlayerCharacter : MonoBehaviour
             if (flashlightLight != null)
             {
                 flashlightLight.enabled = !flashlightLight.enabled;
-                Debug.Log("Toggled flashlight at path: " + path);
             }
             else
             {

@@ -7,18 +7,13 @@ public class JumpScare : MonoBehaviour
 {
     public Image ghostImage;
     public AudioSource scream;
-    private bool hasTriggered = false;
 
-    private void OnTriggerEnter(Collider other)
+    public void Trigger()
     {
-        if (!hasTriggered && other.CompareTag("Player"))
-        {
-            hasTriggered = true;
-            ShowGhost();
-            Debug.Log("Playing scream");
-            scream.Play();
-            Invoke("HideGhost", 1f); 
-        }
+        ShowGhost();
+        Debug.Log("Playing scream");
+        scream.Play();
+        Invoke("HideGhost", 1f);
     }
 
     void ShowGhost()
