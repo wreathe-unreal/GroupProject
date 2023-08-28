@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using UnityEngine.XR;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 using UnityEngine.UIElements;
@@ -46,6 +47,15 @@ public class Ghost : MonoBehaviour
     private Material MaterialComponent;
     private bool bRespawnTimerFinished = true;
 
+
+
+
+
+    //jumpscare
+    public UnityEngine.UI.Image jumpScareImage;  // Drag the Image component of the jumpscare canvas here
+    public AudioSource scream;    // Drag your child audio source with the scream here
+    private bool playerCaught = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +79,8 @@ public class Ghost : MonoBehaviour
         MaterialComponent.EnableKeyword("_ALPHABLEND_ON");
         MaterialComponent.DisableKeyword("_ALPHAPREMULTIPLY_ON");
         MaterialComponent.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+      
+
     }
 
     // Update is called once per frame
@@ -149,14 +161,14 @@ public class Ghost : MonoBehaviour
 
     void CatchPlayer()
     {
-        if (inPursuit && MaterialColor.a > .05)
+        if (inPursuit && MaterialColor.a > .05 && !playerCaught)
         {
-            //Insert Jumpscare etc
-            Glow.color = Color.green;
-            DeathScene.Trigger();
+            ShowJumpScare();
+            if (!scream.isPlaying)
+                scream.Play();
         }
     }
-
+    
     //Function for random behavior when ghost is at specific waypoint
     void ChooseBehavior()
     {
@@ -326,7 +338,17 @@ public class Ghost : MonoBehaviour
         // Set the ghost into patrol mode
         bSpotted = false;
     }
-    
-    
-    
+
+    void ShowJumpScare()
+    {
+        jumpScareImage.color = new Color(jumpScareImage.color.r, jumpScareImage.color.g, jumpScareImage.color.b, 1f); // Set alpha to 1
+        Invoke("HideJumpScare", 2f);  // Hide the jumpscare after 2 seconds
+    }
+
+    void HideJumpScare()
+    {
+        jumpScareImage.color = new Color(jumpScareImage.color.r, jumpScareImage.color.g, jumpScareImage.color.b, 0f); // Set alpha to 0
+    }
+
+
 }
