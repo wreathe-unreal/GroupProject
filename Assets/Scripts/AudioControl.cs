@@ -1,13 +1,26 @@
 using UnityEngine;
+using UnityEngine.Events;
 
-public class BGMController : MonoBehaviour
+[System.Serializable]
+public class FloatEvent : UnityEvent<float> { }
+
+public class AudioControl : MonoBehaviour
 {
+    [SerializeField] private string key;
+    [SerializeField] private float defaultValue = 0;
+    [SerializeField] private FloatEvent onValueLoaded;
+
     public AudioSource[] audioSources;
 
     private void Start()
     {
         audioSources = GetComponents<AudioSource>();
         audioSources[0].Play();
+    }
+
+    private void Awake()
+    {
+        onValueLoaded.Invoke(PlayerPrefs.GetFloat(key, defaultValue));
     }
 
     public void PlayBGM()
