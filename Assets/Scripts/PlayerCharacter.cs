@@ -24,11 +24,7 @@ public class PlayerCharacter : MonoBehaviour
     public List<GameObject> batteries;
 
     void Start()
-    {
-        var surface = GameObject.FindObjectOfType<NavMeshSurface>();
-     
-        surface.UpdateNavMesh (surface.navMeshData);
-
+    {   
         Controller = GetComponent<PlayerController>();
         AudioSource flashlightAudioSource = GetComponents<AudioSource>()[1];
     }
