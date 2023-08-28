@@ -42,12 +42,12 @@ public class Ghost : MonoBehaviour
     private Color ghostMaterialColor;
     private Material ghostMaterial;
     private bool bGhostRespawnTimerFinished = true;
-    private AudioSource[] audioSources;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
-        audioSources = GetComponents<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         ghostMesh = gameObject.GetComponentInChildren<MeshRenderer>();
         ghostMaterial = ghostMesh.material; 
@@ -87,7 +87,7 @@ public class Ghost : MonoBehaviour
         ReactToLight();
         
         //Spotted target
-        if ((bSpotted || dist < 3f) && bGhostRespawnTimerFinished)
+        if ((bSpotted || dist < 4f) && bGhostRespawnTimerFinished)
         {
             SpottedAnimation();
             ghostGlow.color = Color.red;
@@ -253,7 +253,7 @@ public class Ghost : MonoBehaviour
     IEnumerator GhostRespawnTimer()
     {
         bGhostRespawnTimerFinished = false; // Reset the flag
-        yield return new WaitForSeconds(4.0f); // Wait for 4 seconds
+        yield return new WaitForSeconds(6.0f); // Wait for 4 seconds
         bGhostRespawnTimerFinished = true; // Set the flag to true
     }
     
@@ -295,20 +295,27 @@ public class Ghost : MonoBehaviour
             ghostMaterialColor.a -= Time.deltaTime * ghost_fast_decay;
         }
 
-        if (ghostMaterialColor.a <= .2f && ghostMaterialColor.a > .1f)
+        else if (ghostMaterialColor.a <= .2f && ghostMaterialColor.a > .1f)
         {
             ghostMaterialColor.a -= Time.deltaTime* ghost_mid_decay;
         }
 
-        if (ghostMaterialColor.a <= .1f)
+        else if (ghostMaterialColor.a <= .1f)
         {
             ghostMaterialColor.a -= Time.deltaTime * ghost_slow_decay;
+        }
+
+        if (ghostMaterialColor.a < .05 && bGhostRespawnTimerFinished)
+        {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();   
+            }
         }
         if (ghostMaterialColor.a < 0f)
         {
             ghostMaterialColor.a = 0f;
-           
-                StartGhostRespawnTimer();
+            StartGhostRespawnTimer();
         }
         ghostMaterial.color = ghostMaterialColor;
 

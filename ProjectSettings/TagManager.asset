@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Battery20
   - Battery50
+  - Floor
   layers:
   - Default
   - TransparentFX

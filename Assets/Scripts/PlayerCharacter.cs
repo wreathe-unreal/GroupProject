@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
 {
-    public double FlashlightDrainSpeed = -1.0;
+    public double FlashlightDrainSpeed = -.5;
     public bool bFlashlightAcquired = true;
     public bool bFlashlightActive = true;
     public List<EDoorName> Keys;
@@ -19,8 +19,8 @@ public class PlayerCharacter : MonoBehaviour
     // Start is called before the first frame update
 
     // battery attributes
-    public float amountSmallBattery = 20.0f;
-    public float amountBigBattery = 50.0f;
+    public float amountSmallBattery = 40.0f;
+    public float amountBigBattery = 80.0f;
     public List<GameObject> batteries;
 
     void Start()

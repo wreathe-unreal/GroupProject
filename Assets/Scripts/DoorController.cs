@@ -27,7 +27,7 @@ public class DoorController : InteractableObject
     public Animator AnimationController;
     public AudioSource LockedDoorAudio;
     public AudioSource OpenDoorAudio;
-
+    
     private bool bDoorIsClosed = true;
     
     
