@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static double flashlightDecay = -0.5;
+    public bool isActive = false;
     public int gameStartScene;
 
     // Update is called once per frame
@@ -12,10 +14,20 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(gameStartScene);
     }
-    
 
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public double decay()
+    {
+        return flashlightDecay;
+    }
+
+    public void doubleDrain(bool toggle)
+    {
+        if (toggle) flashlightDecay = -1;
+        else flashlightDecay = -0.5;
     }
 }

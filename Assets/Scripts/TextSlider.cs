@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class TextSlider : MonoBehaviour
 {
-    [SerializeField] private string key;
-
     public TextMeshProUGUI numText;
     private Slider slider;
 
@@ -20,6 +18,7 @@ public class TextSlider : MonoBehaviour
     public void SetNumberText(float value)
     {
         numText.text = (value * 100).ToString("F0");
-        PlayerPrefs.SetFloat(key, value);
+        PlayerPrefs.SetFloat("Volume", value);
+        PlayerPrefs.SetFloat("Voices", value);
     }
 }

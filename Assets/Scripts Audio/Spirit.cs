@@ -14,6 +14,11 @@ public class Spirit : MonoBehaviour
 
     private int randomClip;    
 
+    void Start()
+    {
+        audioClips = GetComponent<AudioClip>();
+    }
+
     public void PlayDialog()
     {
         if (audioClips != null)
