@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("Control Script/Mouse Look")] // add to the Unity editor's component menu
