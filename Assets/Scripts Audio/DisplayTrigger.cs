@@ -6,9 +6,14 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 public class DisplayTrigger : MonoBehaviour
 {
+    public Light ProjectorLight;
     public AudioSource audioSource;
     public TextMeshPro displayText;
     private bool bHasDisplayed = false;
+    
+    private float displayDuration = 4f;  
+    private int currentTextIndex = 0;
+    private Renderer planeRenderer;
    
     private string[] textSequence = {
         "Hey!",
@@ -21,10 +26,6 @@ public class DisplayTrigger : MonoBehaviour
         "Fade the cursed spirits with your light...",
         "...or perish when they consume you!"
     };
-
-    private float displayDuration = 4f;  
-    private int currentTextIndex = 0;
-    private Renderer planeRenderer;
     private void Start()
     {
         planeRenderer = GetComponent<Renderer>(); 
@@ -35,6 +36,8 @@ public class DisplayTrigger : MonoBehaviour
         
         if (other.CompareTag("Player") && !bHasDisplayed)
         {
+            ProjectorLight.color = Color.red;
+            ProjectorLight.intensity = 500;
             PlayAudioAndStartDisplayingText();
              bHasDisplayed = true;
         }
@@ -57,5 +60,7 @@ public class DisplayTrigger : MonoBehaviour
             currentTextIndex++;
             Invoke("DisplayText", displayDuration);
         }
+ // Choose the intensity value that suits your application
     }
+
 }
