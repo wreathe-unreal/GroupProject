@@ -72,16 +72,6 @@ public class Ghost : MonoBehaviour
         ghostFOV = transform.GetChild(1).GetComponent<GhostFOV>();
         DeathScene = GetComponent<JumpScare>();
         MaterialColor = MaterialComponent.color;
-        MaterialComponent.SetFloat("_Mode", 3); // Set to Transparent mode
-        MaterialComponent.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        MaterialComponent.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        MaterialComponent.SetInt("_ZWrite", 0);
-        MaterialComponent.DisableKeyword("_ALPHATEST_ON");
-        MaterialComponent.EnableKeyword("_ALPHABLEND_ON");
-        MaterialComponent.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        MaterialComponent.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
-      
-
     }
 
     // Update is called once per frame
@@ -225,21 +215,21 @@ public class Ghost : MonoBehaviour
         Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
         // Define allowed screen deviation from the center
         float allowedScreenDeviation = 250.0f;
+        
+        float distanceToGhost = Vector3.Distance(transform.position, player.transform.position);
 
 // Compute distance from the screen center to the ghost's projected position
         float distanceFromCenter = Vector3.Distance(screenPosition, screenCenter);
         
         if (distanceFromCenter <= allowedScreenDeviation)
         {
-            // Raycast to check for obstruction
-            float distanceToGhost = Vector3.Distance(transform.position, player.transform.position);
-        
-            if (!Physics.Raycast(player.transform.position, player.transform.forward, distanceToGhost, obstructionMask))
+            if(!Physics.Raycast(player.transform.position, player.transform.forward, distanceToGhost, obstructionMask))
             {
                 if (player.GetComponent<PlayerCharacter>().bFlashlightActive)
                 {
-                    //Debug.Log("Player is facing the ghost and not obstructed.");
+                    Debug.Log("Player is facing the ghost and not obstructed.");
                     BanishGhost();
+                    
                 } 
             }
             else
