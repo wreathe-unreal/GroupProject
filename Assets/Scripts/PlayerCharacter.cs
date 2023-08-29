@@ -24,7 +24,8 @@ public class PlayerCharacter : MonoBehaviour
     public List<GameObject> batteries;
 
     void Start()
-    {   
+    {
+        Cursor.visible = false;
         Controller = GetComponent<PlayerController>();
         AudioSource flashlightAudioSource = GetComponents<AudioSource>()[1];
     }
