@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4556694855844174}
   - component: {fileID: 33652672654408418}
   - component: {fileID: 23151539147022078}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Boole_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ Transform:
   - {fileID: 3922877213964464674}
   - {fileID: 7039891884509621927}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8585361758462749735
 Animator:
@@ -371,11 +371,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6841665455465774385, guid: 14ed0f005a73faf4aa2fa8fc21d6823e, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6884101219418020194, guid: 14ed0f005a73faf4aa2fa8fc21d6823e, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6884101219418020194, guid: 14ed0f005a73faf4aa2fa8fc21d6823e, type: 3}
       propertyPath: m_TagString
@@ -435,6 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DoorName: 0
+  manager: {fileID: 0}
   textObject: {fileID: 5698280433962935714}
   targetText: {fileID: 0}
   text: {fileID: 0}
