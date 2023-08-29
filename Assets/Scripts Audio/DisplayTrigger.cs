@@ -2,23 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class DisplayTrigger : MonoBehaviour
 {
     public AudioSource audioSource;
     public TextMeshPro displayText;
-
+    private bool bHasDisplayed = false;
    
-    public string[] textSequence = {
+    private string[] textSequence = {
+        "Hey!",
+        "You...",
         "You are not suppose to be here.",
         "RUN.",
-        "Remember the light is the key."
+        "Take the key, open the door, and let me out.",
+        "Since you'll help me, I'll help you.",
+        "Remember the light is your weapon.",
+        "Fade the cursed spirits with your light...",
+        "...or perish when they consume you!"
     };
 
-    public float displayDuration = 5f;  
+    private float displayDuration = 4f;  
     private int currentTextIndex = 0;
     private Renderer planeRenderer;
-
     private void Start()
     {
         planeRenderer = GetComponent<Renderer>(); 
@@ -26,9 +32,11 @@ public class DisplayTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        
+        if (other.CompareTag("Player") && !bHasDisplayed)
         {
             PlayAudioAndStartDisplayingText();
+             bHasDisplayed = true;
         }
     }
 
@@ -43,21 +51,11 @@ public class DisplayTrigger : MonoBehaviour
 
     void DisplayText()
     {
-        if (currentTextIndex < textSequence.Length)
+        if(currentTextIndex < textSequence.Length)
         {
             displayText.text = textSequence[currentTextIndex];
             currentTextIndex++;
             Invoke("DisplayText", displayDuration);
         }
-        else
-        {
-            displayText.text = "";
-            TurnPlaneRed();
-        }
-    }
-
-    void TurnPlaneRed()
-    {
-        planeRenderer.material.color = Color.red; 
     }
 }

@@ -31,7 +31,6 @@ public class SpiritSpeaker : MonoBehaviour
     }
 
 
-
     // load info from Spirit class
     public void LoadSpirit(Spirit spirit)
     {
