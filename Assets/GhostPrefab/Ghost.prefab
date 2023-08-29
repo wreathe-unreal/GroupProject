@@ -340,9 +340,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MATERIAL_ALPHA_MAX: 0.75
-  FastDecay: 0.9
-  MidDecay: 0.6
-  SlowDecay: 0.06
+  FastDecay: 1
+  MidDecay: 0.7
+  SlowDecay: 0.07
   FastReturn: 0.6
   MidReturn: 0.3
   SlowReturn: 0.03

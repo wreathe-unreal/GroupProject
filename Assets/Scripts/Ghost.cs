@@ -38,7 +38,7 @@ public class Ghost : MonoBehaviour
     private Camera playerCamera;
     private bool inPursuit = false;
     private float pursuitTime = 0;
-    private int pursuitDur = 30;
+    private float pursuitDur = 10f;
     private bool reachStart = false;
     private int prevPoint =-1;
     private Light Glow;
@@ -259,7 +259,7 @@ public class Ghost : MonoBehaviour
     IEnumerator GhostRespawnTimer()
     {
         bRespawnTimerFinished = false; // Reset the flag
-        yield return new WaitForSeconds(6.0f); // Wait for 4 seconds
+        yield return new WaitForSeconds(8.0f); // Wait for 6 seconds
         bRespawnTimerFinished = true; // Set the flag to true
     }
     
@@ -340,6 +340,4 @@ public class Ghost : MonoBehaviour
         jumpScareImage.color = new Color(jumpScareImage.color.r, jumpScareImage.color.g, jumpScareImage.color.b, 0f); // Set alpha to 0
         SceneManager.LoadScene("MainMenu");
     }
-
-
 }
