@@ -30076,7 +30076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: Volume
-  defaultValue: 0
+  defaultValue: 1
   onValueLoaded:
     m_PersistentCalls:
       m_Calls:
@@ -30119,7 +30119,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6a0386c836891e143b22280142d01b69, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.009
+  m_Volume: 0.002
   m_Pitch: -0.28
   Loop: 1
   Mute: 0
@@ -44216,7 +44216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: Volume
-  defaultValue: 0
+  defaultValue: 1
   onValueLoaded:
     m_PersistentCalls:
       m_Calls:

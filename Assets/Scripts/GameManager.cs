@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
         TextMeshProUGUI timeText = GameObject.Find("UI/Timer").GetComponent<TextMeshProUGUI>();
         finalTime = timeText.text;
         SceneManager.LoadScene("VictoryScreen");
+        Cursor.visible = true;
     }
 
     public void QuitGame()

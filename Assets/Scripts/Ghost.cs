@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using UnityEngine.XR;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 using Random = UnityEngine.Random;
 
 public class Ghost : MonoBehaviour
@@ -339,5 +340,6 @@ public class Ghost : MonoBehaviour
     {
         jumpScareImage.color = new Color(jumpScareImage.color.r, jumpScareImage.color.g, jumpScareImage.color.b, 0f); // Set alpha to 0
         SceneManager.LoadScene("MainMenu");
+        Cursor.visible = true;
     }
 }

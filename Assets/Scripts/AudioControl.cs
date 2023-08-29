@@ -7,7 +7,7 @@ public class FloatEvent : UnityEvent<float> { }
 public class AudioControl : MonoBehaviour
 {
     [SerializeField] private string key;
-    [SerializeField] private float defaultValue = 0;
+    [SerializeField] private float defaultValue = 100;
     [SerializeField] private FloatEvent onValueLoaded;
 
     private void Awake()
