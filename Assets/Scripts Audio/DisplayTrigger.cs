@@ -8,13 +8,15 @@ public class DisplayTrigger : MonoBehaviour
 {
     public Light ProjectorLight;
     public AudioSource audioSource;
-    public TextMeshPro displayText;
+    public TextMeshPro displayText1;
+    public TextMeshPro displayText2;
+    public TextMeshPro displayText3;
     private bool bHasDisplayed = false;
     
     private float displayDuration = 4f;  
     private int currentTextIndex = 0;
     private Renderer planeRenderer;
-   
+
     private string[] textSequence = {
         "Hey!",
         "You...",
@@ -26,9 +28,10 @@ public class DisplayTrigger : MonoBehaviour
         "Fade the cursed spirits with your light...",
         "...or perish when they consume you!"
     };
+
     private void Start()
     {
-        planeRenderer = GetComponent<Renderer>(); 
+        planeRenderer = GetComponent<Renderer>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,11 +59,11 @@ public class DisplayTrigger : MonoBehaviour
     {
         if(currentTextIndex < textSequence.Length)
         {
-            displayText.text = textSequence[currentTextIndex];
+            if (currentTextIndex % 3 == 0) displayText1.text = textSequence[currentTextIndex];
+            else if (currentTextIndex % 3 == 1) displayText2.text = textSequence[currentTextIndex];
+            else displayText3.text = textSequence[currentTextIndex];
             currentTextIndex++;
             Invoke("DisplayText", displayDuration);
         }
- // Choose the intensity value that suits your application
     }
-
 }
