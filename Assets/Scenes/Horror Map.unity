@@ -7072,6 +7072,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transcript: {fileID: 0}
+  spirit: {fileID: 0}
+  hasTextDisplayed: 0
 --- !u!114 &306620453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8974,6 +8976,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transcript: {fileID: 0}
+  spirit: {fileID: 0}
+  hasTextDisplayed: 0
 --- !u!114 &411724155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17219,8 +17223,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 20, y: 20, z: 20}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 20, y: 20, z: 40}
+  m_Center: {x: 0, y: -10, z: 5}
 --- !u!64 &683601105
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -18143,6 +18147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transcript: {fileID: 0}
+  spirit: {fileID: 0}
+  hasTextDisplayed: 0
 --- !u!114 &715160544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21957,6 +21963,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transcript: {fileID: 0}
+  spirit: {fileID: 0}
+  hasTextDisplayed: 0
 --- !u!114 &853251906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24426,6 +24434,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transcript: {fileID: 0}
+  spirit: {fileID: 0}
+  hasTextDisplayed: 0
 --- !u!114 &999388949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26496,6 +26506,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transcript: {fileID: 0}
+  spirit: {fileID: 0}
+  hasTextDisplayed: 0
 --- !u!114 &1068157192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31068,6 +31080,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transcript: {fileID: 0}
+  spirit: {fileID: 0}
+  hasTextDisplayed: 0
 --- !u!114 &1361497705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35701,6 +35715,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transcript: {fileID: 0}
+  spirit: {fileID: 0}
+  hasTextDisplayed: 0
 --- !u!114 &1543953274
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class DisplayTrigger : MonoBehaviour
     private string[] textSequence = {
         "Hey!",
         "You...",
-        "You are not suppose to be here.",
+        "You are not supposed to be here.",
         "RUN.",
         "Take the key, open the door, and let me out.",
         "Since you'll help me, I'll help you.",
