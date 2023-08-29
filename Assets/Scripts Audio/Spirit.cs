@@ -9,15 +9,11 @@ public class Spirit : MonoBehaviour
     public string role;
 
     // audio part
+    public AudioSource voice;
     public AudioClip audioClips;
     public string transcripts;
 
     private int randomClip;    
-
-    void Start()
-    {
-        audioClips = GetComponent<AudioClip>();
-    }
 
     public void PlayDialog()
     {

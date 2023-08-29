@@ -7271,6 +7271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameSpirit: Ms. Caldwell
   role: English Teacher
+  voice: {fileID: 0}
   audioClips: {fileID: 8300000, guid: 375247a0b94ee434a85e6f16a03dafe0, type: 3}
   transcripts: '"My students had such potential. Why did I push them so hard?"'
 --- !u!114 &306620454
@@ -9240,7 +9241,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &411724154
 MonoBehaviour:
@@ -9269,6 +9270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameSpirit: Suzy
   role: Student
+  voice: {fileID: 0}
   audioClips: {fileID: 8300000, guid: 375247a0b94ee434a85e6f16a03dafe0, type: 3}
   transcripts: '"The bullies made my life miserable. But I''d forgive them if I could."'
 --- !u!114 &411724156
@@ -10763,7 +10765,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -12, y: -10}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 435.4203, y: 108.8551}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &444749910
 MonoBehaviour:
@@ -10827,8 +10829,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 80
+  m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -18350,6 +18352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameSpirit: Harkness
   role: Math teacher
+  voice: {fileID: 0}
   audioClips: {fileID: 8300000, guid: 7a110645fcafdc8488c03f8759b936fa, type: 3}
   transcripts: '"You must learn your lessons... or face the consequences."'
 --- !u!1 &716407272
@@ -22256,6 +22259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameSpirit: Becca
   role: Photographer
+  voice: {fileID: 0}
   audioClips: {fileID: 8300000, guid: 7c28a6272a959ec4c8b638abbfc982a6, type: 3}
   transcripts: '"My lens captured more than images. It glimpsed the darkness between
     worlds."'
@@ -24720,6 +24724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameSpirit: Janet
   role: Cheerleader
+  voice: {fileID: 0}
   audioClips: {fileID: 8300000, guid: 375247a0b94ee434a85e6f16a03dafe0, type: 3}
   transcripts: '"These halls used to echo with laughter and cheer. Now only screams"'
 --- !u!114 &999388950
@@ -26781,6 +26786,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameSpirit: Ghostly Projectionist
   role: Unknown
+  voice: {fileID: 0}
   audioClips: {fileID: 8300000, guid: 582b2728f450611489ce0779f9ca6729, type: 3}
   transcripts: '"Play the reel. Play it again. Let me go home."'
 --- !u!1001 &1069649999
@@ -28605,8 +28611,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 203.59, y: -36}
-  m_SizeDelta: {x: 361.8278, y: 50}
+  m_AnchoredPosition: {x: 441.34805, y: -58.219666}
+  m_SizeDelta: {x: 837.344, y: 94.4393}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1154548198
 MonoBehaviour:
@@ -28669,8 +28675,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -31453,6 +31459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameSpirit: Unknown
   role: Principal
+  voice: {fileID: 0}
   audioClips: {fileID: 8300000, guid: f8b939e469c5a7f469d647fd3d322105, type: 3}
   transcripts: '"I want to see their smile in hallways again!"'
 --- !u!135 &1361497706
@@ -31503,7 +31510,7 @@ RectTransform:
   m_GameObject: {fileID: 1366389034}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.6164215, y: 1.6164215, z: 1.6164215}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 884877433}
@@ -35949,6 +35956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameSpirit: Antonio
   role: Head Chef
+  voice: {fileID: 0}
   audioClips: {fileID: 8300000, guid: ebe5600643ab0e74186b0278039578f7, type: 3}
   transcripts: '"Such hungry young souls. Their appetites could never be satisfied."'
 --- !u!1 &1550599757

@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static double flashlightDecay = -0.5;    // Does not work currently
     public bool isActive = false;
-    public int gameStartScene;
+    public int gameStartScene;                      // Not needed if scene remains the same name
 
     public GameObject loadBar;
     public Image progBar;
