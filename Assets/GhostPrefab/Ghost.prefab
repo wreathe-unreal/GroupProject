@@ -240,7 +240,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2cf5f565323c1854aae659f2f7ffd928, type: 2}
+  - {fileID: 2100000, guid: 078e48bd62f2a9242909788bfced99ca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -355,7 +355,7 @@ MonoBehaviour:
   AnimationController: {fileID: 0}
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 65
   ghostBanish: {fileID: 6262282411953949906}
   jumpScareImage: {fileID: 4318909129750572162}
   scream: {fileID: 4755655469881950373}
