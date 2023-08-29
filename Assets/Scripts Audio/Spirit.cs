@@ -21,6 +21,7 @@ public class Spirit : MonoBehaviour
         {
             AudioClip clip = audioClips;
             AudioSource.PlayClipAtPoint(clip, transform.position);
+            gameObject.GetComponent<SphereCollider>().enabled = false;
         }
     }
 
