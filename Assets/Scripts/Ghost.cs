@@ -1,7 +1,13 @@
+using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.XR;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class Ghost : MonoBehaviour

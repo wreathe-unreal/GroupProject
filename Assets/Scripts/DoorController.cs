@@ -1,4 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public enum EDoorName
