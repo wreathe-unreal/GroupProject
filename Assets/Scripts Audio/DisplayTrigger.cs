@@ -57,7 +57,9 @@ public class DisplayTrigger : MonoBehaviour
 
     void DisplayText()
     {
-        if(currentTextIndex < textSequence.Length)
+        gameObject.GetComponent<BoxCollider>().enabled = false;
+
+        if (currentTextIndex < textSequence.Length)
         {
             if (currentTextIndex % 3 == 0) displayText1.text = textSequence[currentTextIndex];
             else if (currentTextIndex % 3 == 1) displayText2.text = textSequence[currentTextIndex];

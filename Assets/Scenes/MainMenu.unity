@@ -1951,7 +1951,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: School Escape
+  m_text: Haunted Escape
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f3b95b41c504564e8cf983cab4f81dc, type: 2}
   m_sharedMaterial: {fileID: 5057529884119723518, guid: 2f3b95b41c504564e8cf983cab4f81dc, type: 2}
@@ -3872,7 +3872,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: School Escape
+  m_text: Haunted Escape
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3319302ca394b074f84df6b78c02fbcb, type: 2}
   m_sharedMaterial: {fileID: 8137539941858905525, guid: 3319302ca394b074f84df6b78c02fbcb, type: 2}

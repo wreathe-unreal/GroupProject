@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Spirit : MonoBehaviour
 {
-    // the script that said something about the dead spirit (principal, etc)
-    public string nameSpirit;
-    public string role;
-
     // audio part
-    public AudioSource voice;
     public AudioClip audioClips;
-    public string transcripts;
+    public string transcript;
 
-    private int randomClip;    
+    private string nameSpirit;
+    private int randomClip;
+
+    void Start()
+    {
+        nameSpirit = gameObject.name;
+    }
 
     public void PlayDialog()
     {
@@ -24,5 +25,4 @@ public class Spirit : MonoBehaviour
             gameObject.GetComponent<SphereCollider>().enabled = false;
         }
     }
-
 }

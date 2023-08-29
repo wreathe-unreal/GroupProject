@@ -8,7 +8,7 @@ public class PlayerCharacter : MonoBehaviour
 {
     public double FlashlightDrainSpeed = -.5;
     public bool bFlashlightAcquired = true;
-    public bool bFlashlightActive = true;
+    public bool bFlashlightActive = false;
     public List<EDoorName> Keys;
     private GameObject OverlapDoor;
     private GameObject OverlapKey;

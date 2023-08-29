@@ -6,10 +6,10 @@ public class SpiritSpeaker : MonoBehaviour
 {
     // for UI spirit line to be displayed
     public static SpiritSpeaker instance;
-    public TextMeshProUGUI transcript;
     public Spirit spirit;
 
     private Coroutine displayTimer;
+    private TextMeshProUGUI script;
 
     public bool hasTextDisplayed;
 
@@ -28,6 +28,7 @@ public class SpiritSpeaker : MonoBehaviour
     {
         instance = this;
         spirit = GetComponent<Spirit>();
+        script = GameObject.Find("UI/Popup 2").GetComponent<TextMeshProUGUI>();
     }
 
 
@@ -39,8 +40,8 @@ public class SpiritSpeaker : MonoBehaviour
             StopCoroutine(displayTimer);
         }
 
-        combinedText = $"{spirit.name} ({spirit.role}): {spirit.transcripts}";
-        transcript.text = combinedText;
+        combinedText = $"{spirit.name}: {spirit.transcript}";
+        script.text = combinedText;
 
         displayTimer = StartCoroutine(TextDisplayTimer());
     }
@@ -49,6 +50,6 @@ public class SpiritSpeaker : MonoBehaviour
     private IEnumerator TextDisplayTimer()
     {
         yield return new WaitForSeconds(3f);
-        transcript.text = "";
+        script.text = "";
     }
 }

@@ -17,7 +17,8 @@ public enum EDoorName
 public class DoorController : InteractableObject
 {
     public EDoorName DoorName;
-    // Start is called before the first frame update
+
+    public GameManager manager;
     public GameObject textObject; // Reference to the text object
     public GameObject targetText;
     public TextMeshProUGUI text;
@@ -33,6 +34,7 @@ public class DoorController : InteractableObject
     
     void Start()
     {
+        manager = GameObject.Find("/GameManager").GetComponent<GameManager>();
         targetText = GameObject.Find("UI/Popup");
         prompt = targetText.GetComponent<ActionPrompt>();
         text = textObject.GetComponent<TextMeshProUGUI>();
@@ -58,7 +60,8 @@ public class DoorController : InteractableObject
 
     public void OpenDoor()
     {
-        AnimationController.SetTrigger("OpenDoor");
+        if (DoorName.ToString() != "EscapeDoor") AnimationController.SetTrigger("OpenDoor");
+        else manager.victoryScreen();
     }
     
     public override void Interact(PlayerCharacter player)
