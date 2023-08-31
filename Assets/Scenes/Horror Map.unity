@@ -9699,6 +9699,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 154083740}
     m_Modifications:
+    - target: {fileID: 4399044266407077109, guid: fbf47021a2f3ee24f98212e6d45548b2, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a01e38383f5a9f145be175bd3a354712, type: 2}
     - target: {fileID: 4779641092099275620, guid: fbf47021a2f3ee24f98212e6d45548b2, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -38787,8 +38791,6 @@ MonoBehaviour:
   FlashlightBattery: 100
   FlashlightAudioSource: {fileID: 1666003933}
   InteractObject: {fileID: 0}
-  amountSmallBattery: 40
-  amountBigBattery: 80
   batteries:
   - {fileID: 1879814478}
   - {fileID: 153606765}

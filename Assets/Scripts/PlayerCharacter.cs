@@ -19,8 +19,6 @@ public class PlayerCharacter : MonoBehaviour
     // Start is called before the first frame update
 
     // battery attributes
-    public float amountSmallBattery = 40.0f;
-    public float amountBigBattery = 80.0f;
     public List<GameObject> batteries;
 
     void Start()
@@ -55,14 +53,19 @@ public class PlayerCharacter : MonoBehaviour
             }
     }
 
-    void FindAndDisableLightByString(string path)
+    void FindAndDisableLightByString(string path) // this is a path, imagine a directory
     {
+        // find flash light model
         Transform flashlightTransform = transform.Find(path);
+        // if not null
         if (flashlightTransform != null)
         {
+            // find light component
             Light flashlightLight = flashlightTransform.GetComponent<Light>();
+            // if light not null
             if (flashlightLight != null)
             {
+                // disable light
                 flashlightLight.enabled = !flashlightLight.enabled;
             }
             else
