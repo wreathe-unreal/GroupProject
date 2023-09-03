@@ -42,7 +42,7 @@ public class DisplayTrigger : MonoBehaviour
             ProjectorLight.color = Color.red;
             ProjectorLight.intensity = 500;
             PlayAudioAndStartDisplayingText();
-             bHasDisplayed = true;
+            bHasDisplayed = true;
         }
     }
 

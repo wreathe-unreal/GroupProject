@@ -38,7 +38,8 @@ public class LightFlicker : MonoBehaviour {
         lastSum = 0;
     }
 
-    void Start() {
+    void Start() 
+    {
          smoothQueue = new Queue<float>(smoothing);
          // External or internal light?
          if (light == null) {
@@ -46,7 +47,8 @@ public class LightFlicker : MonoBehaviour {
          }
     }
 
-    void Update() {
+    void Update() 
+    {
         if (light == null)
             return;
 
